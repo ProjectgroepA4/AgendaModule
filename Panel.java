@@ -1,4 +1,4 @@
-public interface Panel
+public class Panel extends JPanel
 {
-	public void show(GregorianCalendar date);
+	
 }
