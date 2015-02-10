@@ -23,8 +23,8 @@ public class Main {
 	public void test()
 	{
 		/*
-		agenda.add(new Event(2014, 12, 1, 2014, 12, 2, "School", "Naar school gaan kut"));
-		agenda.add(new Event(2014, 11, 2, 2014, 11, 4, "School2", "Naar school gaan kut"));
+		agenda.add(new Event(2014, 12, 1, 2014, 12, 2, "School", "Doe iets op school"));
+		agenda.add(new Event(2014, 11, 2, 2014, 11, 4, "School2", "Doe nog iets op school"));
 		agenda.sort(Mode.SORT_LENGTH_DESC);
 		window.setText(agenda + "");
 		SaveLoad.saveFile(agenda);
