@@ -1,0 +1,16 @@
+Eventuele methode om de Arraylisten mee te vullen.
+
+public void test()
+	{
+		Artist artist = new Artist("Paul", "Rock", "null", "description");
+		Event e = new Event(2015,2,13,15,0,2015,2,13,16,0,artist,"Description",7, 1);
+		Stage s = new Stage("Main Stage", 1);
+		
+		addArtist(artist);
+		addEvent(e);
+		addStage(s);
+		
+		saveAll();
+		fillAll();
+		System.out.println("Saved All Data!");
+	}
