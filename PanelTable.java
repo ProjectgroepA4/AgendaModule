@@ -2,11 +2,12 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
@@ -16,7 +17,7 @@ import javax.swing.table.AbstractTableModel;
  * @author Wesley
  * @version 1.0
  */
-public class PanelTable extends Panel {
+public class PanelTable extends JPanel implements Panel{
 
 	private static final long serialVersionUID = 1L;
 	private JScrollPane scrollPane;
@@ -35,16 +36,12 @@ public class PanelTable extends Panel {
 	 * Constructor makes the table and adds it to a scrollPane.
 	 * @param events
 	 */
-	public PanelTable(ArrayList<Event> events, GregorianCalendar calendar) {
-		super(calendar);
-		this.events = events;
-		fullEvents = new ArrayList<>();
-		compileData(columnNames.length,events.size());
+	public PanelTable() {
+
 		table= new JTable();
-		AbstractTableModel tableModel = new ContentTable(data,columnNames);
-		table.setModel(tableModel);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		table.setAutoCreateRowSorter(true);
+		table.setAutoResizeMode(table.AUTO_RESIZE_ALL_COLUMNS);
 		table.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) { if(e.getClickCount() > 1 ) cellClicked(e); else selectedCell = (JTable) e.getSource(); }
 		});
@@ -66,14 +63,15 @@ public class PanelTable extends Panel {
 	 * @param rows
 	 */
 	public void compileData(int columnes, int rows) {
+		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm");
 		data = new Object[rows][columnes];	
 			for(int x = 0; x < rows; x++) {
 				Object[] tempData = new Object[columnes];
 				tempData[0] = "Stage 1";
-				tempData[1] = events.get(x).getName();
+				tempData[1] = events.get(x).getEventName();
 				tempData[2] = events.get(x).getArtist().getName();
-				tempData[3] = events.get(x).getStartDate();
-				tempData[4] = events.get(x).getEndDate();
+				tempData[3] = formatter.format(events.get(x).getStartDate().getTime());
+				tempData[4] = formatter.format(events.get(x).getEndDate().getTime());
 				data[x] = tempData;
 			}		  
 	}
@@ -82,7 +80,12 @@ public class PanelTable extends Panel {
 	 * Refreshes the content on the table with a fresh ArrayList of events, useful when things are removed and added and should be called every time you update the list.
 	 * @param events
 	 */
-	public void refreshContent(ArrayList<Event> events, boolean newList) {
+	public void update(ArrayList<Event> events)
+	{
+		update(events, true);
+	}
+	
+	public void update(ArrayList<Event> events, boolean newList) {
 		this.events = events;
 		if(newList)
 			this.fullEvents = events;
@@ -151,11 +154,9 @@ public class PanelTable extends Panel {
 			switch(selectedCell.getSelectedColumn()) {
 			case 0:
 				for(Event event : fullEvents) {
-					/*
 					if(event.getStage().equals(events.get(selectedCell.getSelectedRow()).getStage())) {
 						filteredList.add(event);
 					}
-					*/
 				}
 				break;
 			case 1: 
@@ -174,11 +175,12 @@ public class PanelTable extends Panel {
 				break;
 				
 			}
-			refreshContent(filteredList,false);	
+			update(filteredList,false);	
 			selectedCell = null;
 		}
 		else {
 			JOptionPane.showMessageDialog(this, "Select a cell with the value u want to filter on","No cell selected",JOptionPane.WARNING_MESSAGE);
 		}
 	}
+
 }
