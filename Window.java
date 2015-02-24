@@ -3,7 +3,10 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.text.SimpleDateFormat;
@@ -11,10 +14,13 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JSeparator;
+import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -22,10 +28,12 @@ import org.apache.commons.lang3.time.DateUtils;
 
 public class Window extends JFrame {
 	
+	private static final long serialVersionUID = 9023061329829975662L;
 	private static HashMap<String, Panel> panels = new HashMap<String, Panel>();
 	private static JPanel centerPanel;
 	private static GregorianCalendar date;
 	private static Agenda agenda;
+	private static String currentPanel = "table";
 	
 	public Window()
 	{
@@ -77,13 +85,78 @@ public class Window extends JFrame {
 		dateLabel.setForeground(Color.WHITE);
 		bottomPanel.add(dateLabel);
 		
+		JButton backWeekButton = new JButton("<<");
+		backWeekButton.setToolTipText("Go one week back");
+		backWeekButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {	
+				date.set(GregorianCalendar.DAY_OF_MONTH, date.get(GregorianCalendar.DAY_OF_MONTH) - 7);
+				dateLabel.setText(formatter.format(date.getTime()));
+				changePanel();
+			}
+		});
+		bottomPanel.add(new JSeparator(SwingConstants.VERTICAL));
+		bottomPanel.add(backWeekButton);
+		
+		JButton backDayButton = new JButton("<");
+		backDayButton.setToolTipText("Go one day back");
+		backDayButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {	
+				date.set(GregorianCalendar.DAY_OF_MONTH, date.get(GregorianCalendar.DAY_OF_MONTH) - 1);
+				dateLabel.setText(formatter.format(date.getTime()));
+				changePanel();
+			}
+		});
+		bottomPanel.add(new JSeparator(SwingConstants.VERTICAL));
+		bottomPanel.add(backDayButton);
+		
+		JButton todayButton = new JButton("||");
+		todayButton.setToolTipText("Go to today");
+		todayButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {	
+				date = new GregorianCalendar();
+				dateLabel.setText(formatter.format(date.getTime()));
+				changePanel();
+			}
+		});
+		bottomPanel.add(new JSeparator(SwingConstants.VERTICAL));
+		bottomPanel.add(todayButton);
+		
+		JButton forwardDayButton = new JButton(">");
+		forwardDayButton.setToolTipText("Go one day forward");
+		forwardDayButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {	
+				date.set(GregorianCalendar.DAY_OF_MONTH, date.get(GregorianCalendar.DAY_OF_MONTH) + 1);
+				dateLabel.setText(formatter.format(date.getTime()));
+				changePanel();
+			}
+		});
+		bottomPanel.add(new JSeparator(SwingConstants.VERTICAL));
+		bottomPanel.add(forwardDayButton);
+		
+		JButton forwardWeekButton = new JButton(">>");
+		forwardWeekButton.setToolTipText("Go one week forward");
+		forwardWeekButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {	
+				date.set(GregorianCalendar.DAY_OF_MONTH, date.get(GregorianCalendar.DAY_OF_MONTH) + 7);
+				dateLabel.setText(formatter.format(date.getTime()));
+				changePanel();
+			}
+		});
+		bottomPanel.add(new JSeparator(SwingConstants.VERTICAL));
+		bottomPanel.add(forwardWeekButton);
+		
 		//Add panels
 		mainPanel.add(centerPanel, BorderLayout.CENTER);
 		mainPanel.add(bottomPanel, BorderLayout.SOUTH);
 		
 		setContentPane(mainPanel);
 		
-		updatePanel("table2");
+		changePanel();
 		
 		//Show window
 		setVisible(true);
@@ -91,13 +164,19 @@ public class Window extends JFrame {
 	
 	public static void updatePanel(String panel)
 	{
+		currentPanel = panel;
+		changePanel();
+	}
+	
+	private static void changePanel()
+	{
 		if(centerPanel.getComponents().length > 0)
 		{
 			centerPanel.remove(0);
 		}
-		Panel p = panels.get(panel);
+		Panel p = panels.get(currentPanel);
 		p.update(getEvents());
-		JPanel p1 = (JPanel)p;
+		JPanel p1 = (JPanel) p;
 		p1.setPreferredSize(centerPanel.getSize());
 		centerPanel.add(p1, BorderLayout.CENTER);
 		centerPanel.repaint();

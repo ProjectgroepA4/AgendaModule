@@ -81,16 +81,9 @@ public class MenuBar extends JMenuBar {
 				Window.updatePanel("table");
 			}
 		});
-		JMenuItem table2 = new JMenuItem("Table 2");
-		table2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Window.updatePanel("table2");
-			}
-		});
 		
 		view.add(timeline);
 		view.add(table);
-		view.add(table2);
 		add(view);
 	}
 }

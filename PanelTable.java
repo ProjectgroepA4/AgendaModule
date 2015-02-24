@@ -133,7 +133,7 @@ public class PanelTable extends JPanel implements Panel{
 	 */
 	private void openArtistDialog(int row) {
 		JFrame frame = new JFrame();
-		Artist artsit = events.get(row).getArtist();
+		Artist artist = events.get(row).getArtist();
 		//the dialog				
 		frame.pack();
 		frame.setSize(300, 200);
