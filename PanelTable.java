@@ -1,10 +1,19 @@
+import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -15,7 +24,7 @@ import javax.swing.table.AbstractTableModel;
 /**
  * Constructs a JTable in a ScrolPane.
  * @author Wesley
- * @version 1.0
+ * @version 1.2
  */
 public class PanelTable extends JPanel implements Panel{
 
@@ -37,24 +46,35 @@ public class PanelTable extends JPanel implements Panel{
 	 * @param events
 	 */
 	public PanelTable() {
-
+		super.setLayout(new BorderLayout());
 		table= new JTable();
-		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		table.setAutoCreateRowSorter(true);
 		table.setAutoResizeMode(table.AUTO_RESIZE_ALL_COLUMNS);
 		table.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) { if(e.getClickCount() > 1 ) cellClicked(e); else selectedCell = (JTable) e.getSource(); }
 		});
 		scrollPane = new JScrollPane(table,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);	
-		scrollPane.setBorder(null);
-		add(scrollPane);		
+		add(scrollPane,BorderLayout.SOUTH);	
+		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		JButton button;
+		button = new JButton("Filter");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) { filter(); }
+		});
+		buttonPanel.add(button);
+		button = new JButton(new ImageIcon("sprites/sprite0.png"));
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) { update(fullEvents, true); }
+		});
+		buttonPanel.add(button);
+		add(buttonPanel,BorderLayout.NORTH);
 	}
 	
 	/**
 	 * Sets the size of the scrollPane, in which the table is placed to fill out its container panel (not sure if this is needed?)
 	 */
 	public void paintComponent(Graphics g) {
-		scrollPane.setPreferredSize(new Dimension(getWidth(),getHeight()));
+		scrollPane.setPreferredSize(new Dimension(getWidth(),getHeight()-35));
 	}
 	
 	/**
