@@ -65,9 +65,36 @@ public class Timeline extends JPanel
 
 		for(Stage stage : stages)
 		{
-			StagePanel stagepanel = new StagePanel(calcshit(stage.getLength()), 30, 100);
+			StagePanel stagepanel = new StagePanel(calcLengthOfStage(stage.getLength()), 30, calcshit(stage.getStartTime()));
 			Container content = stagepanel;
 			content.setMaximumSize(new Dimension(frame.getWidth() - 70,30));
+			content.addMouseListener(new MouseListener() {
+				
+				@Override
+				public void mouseReleased(MouseEvent e) {
+					resizeTimeline();
+				}
+				
+				@Override
+				public void mousePressed(MouseEvent e) {
+					
+				}
+				
+				@Override
+				public void mouseExited(MouseEvent e) {
+					
+				}
+				
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					
+				}
+				
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					
+				}
+			});
 			content.addMouseMotionListener(new MouseMotionListener() {
 
 				@Override
@@ -87,23 +114,36 @@ public class Timeline extends JPanel
 		this.add(centerPanel, BorderLayout.CENTER);
 	}
 
+	public void resizeTimeline()
+	{
+		
+	}
+	//testcode
+	public int calcLengthOfStage(int length)
+	{
+		double lengthOfStage = 0;
+		int min = test(1);
+		int max = test(2);
+		
+		double frameWidth = frame.getWidth();
+		double pixelsPerLength = frameWidth / (max - min);
+//		System.out.println(pixelsPerLength);
+		lengthOfStage =  pixelsPerLength * (double)length;
+//		System.out.println(length);
+		System.out.println(lengthOfStage);
+		
+		return (int)lengthOfStage;
+	}
+	
 	//Testcode
-	public int calcshit(int lengthInHours)
+	public int calcshit(int startTime)
 	{
 		int posx = 0;
 		int min = test(1);
 		int max = test(2);
-		int timeSpan = max - min;
-		
-		
-		
-		
-		
-		
-		
-		
-		System.out.println(timeSpan);
-		return 10;
+		posx = startTime - min;
+
+		return posx;
 	}
 
 	//testcode
@@ -214,8 +254,10 @@ public class Timeline extends JPanel
 		stages.add(stage1);
 		Stage stage2 = new Stage(performances, 100, null, 1700, 1900);
 		Stage stage3 = new Stage(performances, 100, null, 1600, 1800);
+		Stage stage4 = new Stage(performances, 100, null, 1600, 2100);
 		stages.add(stage3);
 		stages.add(stage2);
+//		stages.add(stage4);
 
 	}
 
