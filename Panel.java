@@ -1,22 +1,5 @@
-import java.util.GregorianCalendar;
+import java.util.ArrayList;
 
-import javax.swing.JPanel;
-
-public class Panel extends JPanel
-{
-	private GregorianCalendar date;
-	
-	public Panel(GregorianCalendar calendar)
-	{
-		date = calendar;
-	}
-	
-	public GregorianCalendar getDate()
-	{
-		return date;
-	}
-	public void setDate(GregorianCalendar calendar)
-	{
-		date = calendar;
-	}
+public interface Panel{
+	public void update(ArrayList<Event> event);
 }
