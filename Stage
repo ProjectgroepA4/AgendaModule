@@ -1,0 +1,49 @@
+import java.io.Serializable;
+import java.util.ArrayList;
+
+
+public class Stage implements Serializable {
+
+	private static final long serialVersionUID = 1;
+	
+	private ArrayList<Event> events;
+	private String description;
+	private int ID;
+	
+	public Stage(String description, int ID )
+	{
+		this.events = new ArrayList<Event>();
+		this.description = description;
+		this.ID = ID;
+	}
+	
+	public Event getEvent(int number)
+	{
+		return events.get(number);
+	}
+		
+	public String getDescription()
+	{
+		return this.description;
+	}
+	
+	public int getID()
+	{
+		return this.ID;
+	}
+	
+	public void setDescription(String description)
+	{
+		this.description = description;
+	}
+	
+	public void setID(int ID)
+	{
+		this.ID = ID;
+	}
+	
+	public void addEvent(Event event)
+	{
+		events.add(event);
+	}
+}

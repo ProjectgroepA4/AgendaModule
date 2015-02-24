@@ -1,0 +1,93 @@
+import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.GregorianCalendar;
+
+public class Event implements Serializable {
+
+	private static final long serialVersionUID = 1;
+
+	private GregorianCalendar startDate;
+	private GregorianCalendar endDate;
+	private Artist artist;
+	private String description;
+	private int expectedPopularity;
+	private int ID;
+
+	public Event(int startYear, int startMonth, int startDay, int startHour,
+			int startMinute, int endYear, int endMonth, int endDay,
+			int endHour, int endMinute, Artist artist, String description,
+			int expectedPopularity, int ID) {
+		startDate = new GregorianCalendar(startYear, startMonth - 1, startDay,
+				startHour, startMinute);
+		endDate = new GregorianCalendar(endYear, endMonth - 1, endDay, endHour,
+				endMinute);
+		this.artist = artist;
+		this.description = description;
+		this.expectedPopularity = expectedPopularity;
+		this.ID = ID;
+	}
+
+	public GregorianCalendar getStartDate() {
+		return this.startDate;
+	}
+
+	public GregorianCalendar getEndDate() {
+		return this.endDate;
+	}
+
+	public Artist getArtist() {
+		return this.artist;
+	}
+
+	public String getDescription() {
+		return this.description;
+	}
+
+	public int getID() {
+		return this.ID;
+	}
+
+	public int getExpectedPopularity() {
+		return this.expectedPopularity;
+	}
+
+	public void setStartDate(int startYear, int startMonth, int startDay,
+			int startHour, int startMinute) {
+		startDate.set(startYear, startMonth - 1, startDay, startHour,
+				startMinute);
+	}
+
+	public void setEndDate(int endYear, int endMonth, int endDay, int endHour,
+			int endMinute) {
+		endDate.set(endYear, endMonth - 1, endDay, endHour, endMinute);
+	}
+
+	public void setArtist(Artist artist) {
+		this.artist.setName(artist.getName());
+		this.artist.setGenre(artist.getGenre());
+		this.artist.setImageIcon(artist.getImage());
+		this.artist.setDescription(artist.getDescription());
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public void setExpectedPopularity(int popularity) {
+		this.expectedPopularity = popularity;
+	}
+
+	public void setID(int ID) {
+		this.ID = ID;
+	}
+
+	public String toString() {
+		DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+		format.setLenient(false);
+
+		return artist.getName() + " plays from "
+				+ format.format(startDate.getTime()) + " to "
+				+ format.format(endDate.getTime()) + ".";
+	}
+}
