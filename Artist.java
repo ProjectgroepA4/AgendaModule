@@ -20,9 +20,7 @@ public class Artist implements Serializable{
 		
 		if ( !image.equals("null")) {
 			this.image = new ImageIcon(image);
-		} else {
-			this.image = null;
-		}
+		} 
 	}
 	
 	public String getName()
