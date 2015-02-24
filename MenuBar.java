@@ -13,7 +13,7 @@ public class MenuBar extends JMenuBar {
 	private static final long serialVersionUID = -2095136277753179215L;
 
 	
-	public MenuBar()
+	public MenuBar(Window w)
 	{
 		super();
 		
@@ -22,11 +22,19 @@ public class MenuBar extends JMenuBar {
 		 */
 		JMenu file = new JMenu("File");
 		
+		JMenuItem newEvent = new JMenuItem("New Event");
+		newEvent.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, ActionEvent.CTRL_MASK));
+		newEvent.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//TODO
+			}
+		});
+		
 		JMenuItem open = new JMenuItem("Open");
 		open.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, ActionEvent.CTRL_MASK));
 		open.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Object obj = SaveLoad.loadFile();
+				w.getAgenda().loadAgenda();
 			}
 		});
 		
@@ -34,7 +42,7 @@ public class MenuBar extends JMenuBar {
 		save.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.CTRL_MASK));
 		save.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				SaveLoad.saveFile(new Object());
+				w.getAgenda().saveAgenda();
 			}
 		});
 		
@@ -45,6 +53,8 @@ public class MenuBar extends JMenuBar {
 			}
 		});
 		
+		file.add(newEvent);
+		file.addSeparator();
 		file.add(open);
 		file.add(save);
 		file.addSeparator();
@@ -71,34 +81,16 @@ public class MenuBar extends JMenuBar {
 				Window.updatePanel("table");
 			}
 		});
+		JMenuItem table2 = new JMenuItem("Table 2");
+		table2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Window.updatePanel("table2");
+			}
+		});
 		
 		view.add(timeline);
 		view.add(table);
+		view.add(table2);
 		add(view);
-		
-		
-		/*
-		 * SORT
-		 */
-		
-		JMenu sort = new JMenu("Sort");
-		
-		JMenuItem sort_name = new JMenuItem("Name");
-		sort_name.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				//TODO
-			}
-		});
-		
-		JMenuItem sort_date = new JMenuItem("Date");
-		sort_date.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				//TODO
-			}
-		});
-		
-		sort.add(sort_name);
-		sort.add(sort_date);
-		add(sort);
 	}
 }
