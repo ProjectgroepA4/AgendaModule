@@ -65,14 +65,14 @@ public class Timeline extends JPanel
 
 		for(Stage stage : stages)
 		{
-			StagePanel stagepanel = new StagePanel(calcLengthOfStage(stage.getLength()), 30, calcshit(stage.getStartTime()));
+			StagePanel stagepanel = new StagePanel(calcLengthOfStage(stage.getLength()), 30, calcPositionOfStage(stage.getStartTime()), stage);
 			Container content = stagepanel;
 			content.setMaximumSize(new Dimension(frame.getWidth() - 70,30));
 			content.addMouseListener(new MouseListener() {
 				
 				@Override
 				public void mouseReleased(MouseEvent e) {
-					resizeTimeline();
+					resizeTimeline(stagepanel);
 				}
 				
 				@Override
@@ -114,40 +114,65 @@ public class Timeline extends JPanel
 		this.add(centerPanel, BorderLayout.CENTER);
 	}
 
-	public void resizeTimeline()
+	public void resizeTimeline(StagePanel stagepanel)
 	{
+		int min = findMinMax(1);
+		int max = findMinMax(2);
+		System.out.println(stagepanel.getStageStartTime());
+		System.out.println(calcStartTimeOfStagePanel(stagepanel.getPosX()));
+		stagepanel.setStageStartTime(calcStartTimeOfStagePanel(stagepanel.getPosX()));
+		
 		
 	}
-	//testcode
+	
 	public int calcLengthOfStage(int length)
 	{
 		double lengthOfStage = 0;
-		int min = test(1);
-		int max = test(2);
+		int min = findMinMax(1);
+		int max = findMinMax(2);
 		
 		double frameWidth = frame.getWidth();
 		double pixelsPerLength = frameWidth / (max - min);
-//		System.out.println(pixelsPerLength);
 		lengthOfStage =  pixelsPerLength * (double)length;
-//		System.out.println(length);
-		System.out.println(lengthOfStage);
 		
 		return (int)lengthOfStage;
 	}
 	
-	//Testcode
-	public int calcshit(int startTime)
+	public int calcPositionOfStage(int startTime)
 	{
 		int posx = 0;
-		int min = test(1);
-		int max = test(2);
+		int min = findMinMax(1);
+		int max = findMinMax(2);
 		posx = startTime - min;
-
+		posx = posx * frame.getWidth() / (max-min);
+//		System.out.println("Frame: " + frame.getWidth());
+//		System.out.println("startTime: " + startTime);
+//		System.out.println("Max: " + max + " min: " + min);
+//		System.out.println("Posx: " + posx);
 		return posx;
 	}
+	
+	public int calcStartTimeOfStagePanel(int posx)
+	{
+		int min = findMinMax(1);
+		int max = findMinMax(2);
+//		double startTime = (posx / (frame.getWidth() / (max - min )) ) + min;
+		//Omdat het anders onnodig afgerond wordt, alles apart in doubles.
+		double minmax = max-min;
+		double bottom = frame.getWidth() / minmax;
+		double all = posx / bottom;
+		double startTime = all + min;
+		
+		
+//		System.out.println("starttime----------------");
+//		System.out.println("Frame: " + frame.getWidth());
+//		System.out.println("startTime: " + startTime);
+//		System.out.println("Max: " + max + " min: " + min);
+//		System.out.println("Posx: " + posx);
+		return (int)startTime;
+	}
 
-	//testcode
-	public int test(int i)
+	public int findMinMax(int i)
 	{
 		//		Event oldevent = new Event(0, 0, null, "Base", 0);
 		//		ArrayList<Event> oldevents = new ArrayList<Event>();

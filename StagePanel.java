@@ -13,19 +13,17 @@ public class StagePanel extends JPanel
 {
 	private BufferedImage image;
 	private int width, height, posX;
-	private boolean listening;
-	public StagePanel(int width, int height, int posX) 
+	private Stage stage;
+	public StagePanel(int width, int height, int posX, Stage stage) 
 	{
 		this.width = width;
 		this.height = height;
 		this.posX = posX;
-		listening = false;
+		this.stage = stage;
 		image = new BufferedImage(this.width, this.height, BufferedImage.TYPE_INT_ARGB);
 		Graphics2D g2 = image.createGraphics();
 		g2.setColor(Color.blue);
 		g2.fillRect(0, 0, image.getWidth(), image.getHeight());
-//		this.setSize(new Dimension(width, height));
-//		System.out.println(this.getSize());
 	}
 	
 	public void paint(Graphics g)
@@ -51,11 +49,27 @@ public class StagePanel extends JPanel
 		this.posX = posx;
 		repaint();
 	}
+	
 
 	public StagePanel(LayoutManager arg0, boolean arg1) 
 	{
 		super(arg0, arg1);
 
+	}
+	
+	public int getPosX()
+	{
+		return this.posX;
+	}
+	
+	public void setStageStartTime(int startTime)
+	{
+		stage.setStartTime(startTime);
+	}
+	
+	public int getStageStartTime()
+	{
+		return stage.getStartTime();
 	}
 	
 	public int getImageWidth()
