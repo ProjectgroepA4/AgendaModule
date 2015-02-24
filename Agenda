@@ -8,6 +8,10 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileFilter;
+
 public class Agenda implements Serializable {
 
 	private static final long serialVersionUID = 1;
@@ -21,8 +25,8 @@ public class Agenda implements Serializable {
 		events = new ArrayList<Event>();
 		artists = new ArrayList<Artist>();
 	}
-
-	public void addStage(Stage stage) {
+	
+	public void addStage(Stage stage){
 		stages.add(stage);
 	}
 
@@ -33,35 +37,94 @@ public class Agenda implements Serializable {
 	public void addArtist(Artist artist) {
 		artists.add(artist);
 	}
-
-	public void fillArtists() {
-		FileInputStream fis = null;
-		ObjectInputStream ois = null;
-
-		try {
-			fis = new FileInputStream("artists.dat");
-			ois = new ObjectInputStream(fis);
-
-			Object object;
-			object = ois.readObject();
-			try {
-				while (object != null) {
-					artists.add((Artist) object);
-					object = ois.readObject();
+	
+	public void saveAgenda()
+	{
+		JFileChooser fileChooser = new JFileChooser();
+		
+		fileChooser.setFileFilter(new FileFilter() {
+				@Override
+				public boolean accept(File pathname) {
+					if(pathname.isFile() && pathname.getName().endsWith(".dat"))
+					{
+						return true;
+					}else if(pathname.isDirectory()){return true;}else{return false;}
 				}
-			} catch (EOFException e) {
+
+				@Override
+				public String getDescription() {
+					return ".dat";
+				}
+			
+		});
+		fileChooser.setDialogTitle("Choose save location");
+		int userSelection = fileChooser.showSaveDialog(null);
+		
+		if(userSelection == JFileChooser.APPROVE_OPTION)
+		{
+			File file = fileChooser.getSelectedFile();
+			if(!file.getName().endsWith(".dat"))
+			{
+				file = new File(file.getAbsolutePath() + ".dat");
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
+			
+			if(file.exists())
+			{
+				if(JOptionPane.showConfirmDialog(null, "Are you sure you want to overwrite: " + file.getName(), "Overwrite", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION)
+				{
+					saveAgenda(file);
+				}
+			}
+			else
+			{
+				saveAgenda(file);
+			}
 		}
 	}
+	
+	public void loadAgenda()
+	{
+		JFileChooser fileChooser = new JFileChooser();
+		fileChooser.setFileFilter(new FileFilter() {
+			@Override
+			public boolean accept(File pathname) {
+				if(pathname.isFile() && pathname.getName().endsWith(".dat"))
+				{
+					return true;
+				}else if(pathname.isDirectory()){return true;}else{return false;}
+			}
 
-	public void fillEvents() {
+			@Override
+			public String getDescription() {
+				return ".dat";
+			}
+		
+		});
+		
+		fileChooser.setDialogTitle("Choose file");
+		int userSelection = fileChooser.showOpenDialog(null);
+		
+		if(userSelection == JFileChooser.APPROVE_OPTION)
+		{
+			File file = fileChooser.getSelectedFile();
+			if(!file.exists())
+			{
+				JOptionPane.showMessageDialog(null, "This file does not exist: " + file.getName());
+			}
+			else
+			{
+				fillAgenda(file);
+			}
+		}
+		}
+
+	public void fillAgenda(File file) {
 		FileInputStream fis = null;
 		ObjectInputStream ois = null;
 
 		try {
-			fis = new FileInputStream("events.dat");
+			
+			fis = new FileInputStream(file);
 			ois = new ObjectInputStream(fis);
 
 			Object object;
@@ -78,54 +141,46 @@ public class Agenda implements Serializable {
 		}
 
 	}
-
-	public void fillStages() {
-		FileInputStream fis = null;
-		ObjectInputStream ois = null;
-
-		try {
-			fis = new FileInputStream("stages.dat");
-			ois = new ObjectInputStream(fis);
-
-			Object object;
-			object = ois.readObject();
-			try {
-				while (object != null) {
-					stages.add((Stage) object);
-					object = ois.readObject();
+	
+	public void fillArtists()
+	{
+		for (Event e : events)
+		{
+			boolean exists = false;
+			String name = e.getArtist().getName();
+			for (Artist a : artists)
+			{
+				if ( a.getName().equals(name) ) {
+					exists = true;
 				}
-			} catch (EOFException e) {
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	public void saveStages() {
-
-		try {
-			File file = new File("stages.dat");
-			if (!file.exists()){
-				file.createNewFile();
-			} 		
-			FileOutputStream fos = new FileOutputStream(file);
-			ObjectOutputStream oos = new ObjectOutputStream(fos);
-			for (Stage stage : stages) {
-				oos.writeObject(stage);
+			if ( exists == false) {
+				addArtist(e.getArtist());
 			}
-			oos.close();
-		} catch (IOException e) {
-			e.printStackTrace();
 		}
 	}
 	
-	public void saveEvents() {
+	public void fillStages()
+	{
+		for (Event e : events)
+		{
+			boolean exists = false;
+			String name = e.getStage().getName();
+			for (Stage s : stages)
+			{
+				if ( s.getName().equals(name) ) {
+					exists = true;
+				}
+			}
+			if ( exists == false) {
+				addStage(e.getStage());
+			}
+		}
+	}
+
+	public void saveAgenda(File file) {
 
 		try {
-			File file = new File("events.dat");
-			if (!file.exists()){
-				file.createNewFile();
-			} 
 			FileOutputStream fos = new FileOutputStream(file);
 			ObjectOutputStream oos = new ObjectOutputStream(fos);
 			for (Event event : events) {
@@ -135,54 +190,25 @@ public class Agenda implements Serializable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
+	}		
 	
-	public void saveArtists() {
-		
-		try {
-			File file = new File("artists.dat");
-			if (!file.exists()){
-				file.createNewFile();
-			} 
-			FileOutputStream fos = new FileOutputStream(file);
-			ObjectOutputStream oos = new ObjectOutputStream(fos);
-			for (Artist artist : artists) {
-				oos.writeObject(artist);
-			}
-			oos.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
+	public void clearAgenda()
+	{
+		events.clear();
+	}	
 	
-	public void addEvents()
+	public void fillAllLists()
 	{
-		int ID = 0;
-		for (Stage stage : stages)
-		{
-			ID = stage.getID();
-			for (Event event : events)
-			{
-				if ( ID == event.getID())
-				{
-					stage.addEvent(event);
-				}
-			}
-		}
-	}
-		
-	public void saveAll()
-	{
-		saveArtists();
-		saveEvents();
-		saveStages();
-	}
-	
-	public void fillAll()
-	{
-		fillArtists();
-		fillEvents();
+		loadAgenda();
 		fillStages();
-		addEvents();
+		fillArtists();
+	}
+	
+	public static void main(String[] args)
+	{
+		Agenda a = new Agenda();
+		a.fillAllLists();
+		
+		System.out.println(a.events.get(0).getEventName());
 	}
 }
