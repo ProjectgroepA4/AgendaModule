@@ -118,6 +118,7 @@ public class Agenda implements Serializable {
 			}
 			else
 			{
+				clearAgenda();
 				fillAgenda(file);
 			}
 		}
