@@ -1,5 +1,6 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -25,7 +27,7 @@ import javax.swing.JPanel;
 public class Timeline extends JPanel
 {
 	private ArrayList<Stage> stages = new ArrayList<Stage>();
-	private JFrame frame;
+	private JPanel frame;
 
 //	Geef dit object je JFrame mee, en zet in je JFrame de volgende code:
 //	this.setContentPane(timeline.getTimeline());
@@ -36,12 +38,14 @@ public class Timeline extends JPanel
 //        }
 //	});
 	
-	public Timeline(JFrame frame) 
+	
+	public Timeline(JPanel frame) 
 	{
-		super(new BorderLayout());
+		super();
 		this.frame = frame;
 
 		genStages();
+		this.setSize(frame.getWidth(), frame.getHeight());
 		refresh();
 		
 	}
@@ -49,7 +53,7 @@ public class Timeline extends JPanel
 	public void refresh()
 	{
 		this.removeAll();	
-		createWestPanel();
+//		createWestPanel();
 		createMainPanel();
 		this.revalidate();
 	}
@@ -59,11 +63,18 @@ public class Timeline extends JPanel
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 		Container topContainer = createTopPanel();
-		Dimension dim = new Dimension(frame.getWidth(), 60);
+		Dimension dim = new Dimension(this.getWidth(), 60);
 		topContainer.setMaximumSize(dim);
 		mainPanel.add(topContainer);
-		Container centerContainer = createCenterPanel();
-		centerContainer.setMaximumSize(new Dimension(frame.getWidth(), frame.getHeight()));
+		
+		Dimension centerDim = new Dimension(this.getWidth(), frame.getHeight());
+		
+//		Container centerContainer = createCenterPanel();
+		JPanel centerContainer = createCenterPanel();
+		centerContainer.setPreferredSize(centerDim);
+
+		centerContainer.setMaximumSize(centerDim);
+		System.out.println(centerDim);
 		mainPanel.add(centerContainer);
 		this.add(mainPanel, BorderLayout.CENTER);
 	}
@@ -80,7 +91,7 @@ public class Timeline extends JPanel
 		{
 			StagePanel stagepanel = new StagePanel(calcLengthOfStage(stage.getLength()), 30, calcPositionOfStage(stage.getStartTime()), stage);
 			Container content = stagepanel;
-			content.setMaximumSize(new Dimension(frame.getWidth() - 70,30));
+			content.setMaximumSize(new Dimension(this.getWidth(),30));
 			content.addMouseListener(new MouseListener() {
 				
 				@Override
@@ -136,6 +147,8 @@ public class Timeline extends JPanel
 //		System.out.println(calcStartTimeOfStagePanel(stagepanel.getPosX()));
 		stagepanel.setStageStartTime(calcStartTimeOfStagePanel(stagepanel.getPosX()));
 		stagepanel.setStageEndTime(calcEndTimeOfStagePanel(stagepanel.getPosX(), stagepanel.getImageWidth()));
+//		stagepanel.setLength(calcLengthOfStagePanel(stagepanel.getImageWidth()));
+//		System.out.println(calcLengthOfStagePanel(stagepanel.getImageWidth()));
 		refresh();
 		
 		
@@ -147,10 +160,10 @@ public class Timeline extends JPanel
 		int min = findMinMax(1);
 		int max = findMinMax(2);
 		
-		double frameWidth = frame.getWidth();
+		double frameWidth = this.getWidth();
 		double pixelsPerLength = frameWidth / (max - min);
 		lengthOfStage =  pixelsPerLength * (double)length;
-		
+//		System.out.println((int)lengthOfStage);
 		return (int)lengthOfStage;
 	}
 	
@@ -159,12 +172,12 @@ public class Timeline extends JPanel
 		double lengthOfStagePanel = 0;
 		int min = findMinMax(1);
 		int max = findMinMax(2);
-		System.out.println(length);
-		double frameWidth = frame.getWidth();
+//		System.out.println(length);
+		double frameWidth = this.getWidth();
 		double pixelsPerLength = frameWidth / (max - min);
-		System.out.println(pixelsPerLength);
+//		System.out.println(pixelsPerLength);
 		lengthOfStagePanel =  (double)length / pixelsPerLength;
-		System.out.println(lengthOfStagePanel);
+//		System.out.println(lengthOfStagePanel);
 		
 		return (int)lengthOfStagePanel;
 	}
@@ -175,8 +188,8 @@ public class Timeline extends JPanel
 		int min = findMinMax(1);
 		int max = findMinMax(2);
 		posx = startTime - min;
-		posx = posx * frame.getWidth() / (max-min);
-//		System.out.println("Frame: " + frame.getWidth());
+		posx = posx * this.getWidth() / (max-min);
+//		System.out.println("Frame: " + this.getWidth());
 //		System.out.println("startTime: " + startTime);
 //		System.out.println("Max: " + max + " min: " + min);
 //		System.out.println("Posx: " + posx);
@@ -187,16 +200,16 @@ public class Timeline extends JPanel
 	{
 		int min = findMinMax(1);
 		int max = findMinMax(2);
-//		double startTime = (posx / (frame.getWidth() / (max - min )) ) + min;
+//		double startTime = (posx / (this.getWidth() / (max - min )) ) + min;
 		//Omdat het anders onnodig afgerond wordt, alles apart in doubles.
 		double minmax = max-min;
-		double bottom = frame.getWidth() / minmax;
+		double bottom = this.getWidth() / minmax;
 		double all = posx / bottom;
 		double startTime = all + min;
 		
 		
 //		System.out.println("starttime----------------");
-//		System.out.println("Frame: " + frame.getWidth());
+//		System.out.println("Frame: " + this.getWidth());
 //		System.out.println("startTime: " + startTime);
 //		System.out.println("Max: " + max + " min: " + min);
 //		System.out.println("Posx: " + posx);
@@ -209,7 +222,7 @@ public class Timeline extends JPanel
 		int max = findMinMax(2);
 		//Omdat het anders onnodig afgerond wordt, alles apart in doubles.
 		double minmax = max-min;
-		double bottom = frame.getWidth() / minmax;
+		double bottom = this.getWidth() / minmax;
 		double all = posx / bottom;
 		double endTime = all + min + calcLengthOfStagePanel(imageWidth);
 //		System.out.println(calcLengthOfStagePanel(imageWidth));
@@ -274,10 +287,6 @@ public class Timeline extends JPanel
 			System.out.println("Return -1");
 			return -1;
 		}
-
-
-
-
 	}
 
 	private JPanel createTopPanel()
@@ -285,7 +294,7 @@ public class Timeline extends JPanel
 		JPanel topPane = new JPanel();
 		topPane.setLayout(new BoxLayout(topPane, BoxLayout.Y_AXIS));
 		JPanel topPanel = new JPanel(new FlowLayout());
-		for(int i = 0; i <= frame.getWidth() / 10; i++)
+		for(int i = 0; i <= this.getWidth() / 10; i++)
 		{
 			ImageIcon topImageIcon = new ImageIcon("src/test2.png");
 			JLabel topImage = new JLabel(topImageIcon);
@@ -294,18 +303,18 @@ public class Timeline extends JPanel
 		topPane.add(Box.createRigidArea(new Dimension(0,20)));
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
-		panel.add(Box.createRigidArea(new Dimension(10, 10)));
+		panel.add(Box.createRigidArea(new Dimension(50, 10)));
 		panel.add(new JLabel(Integer.toString(findMinMax(1))));
 		panel.add(Box.createHorizontalGlue());
 		panel.add(new JLabel(Integer.toString(findMinMax(2))));
-		panel.add(Box.createRigidArea(new Dimension(10, 10)));
+		panel.add(Box.createRigidArea(new Dimension(50, 10)));
 		topPane.add(panel);
 		topPane.add(topPanel);
 //		this.add(topPane, BorderLayout.NORTH);
 		return topPane;
 	}
 
-	private void createWestPanel()
+	public JPanel createWestPanel()
 	{
 		JPanel westPanel = new JPanel();
 		westPanel.setLayout(new BoxLayout(westPanel, BoxLayout.Y_AXIS));
@@ -316,7 +325,8 @@ public class Timeline extends JPanel
 			westPanel.add(stageText);
 			westPanel.add(Box.createRigidArea(new Dimension(0, 30 )));
 		}
-		this.add(westPanel, BorderLayout.WEST);
+//		this.add(westPanel, BorderLayout.WEST);
+		return westPanel;
 	}
 
 	private void genStages()

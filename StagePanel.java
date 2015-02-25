@@ -62,6 +62,11 @@ public class StagePanel extends JPanel
 		return this.posX;
 	}
 	
+	public void setLength(int length)
+	{
+		this.width = length;
+	}
+	
 	public void setStageStartTime(int startTime)
 	{
 		stage.setStartTime(startTime);
