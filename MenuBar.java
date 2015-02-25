@@ -30,6 +30,20 @@ public class MenuBar extends JMenuBar {
 			}
 		});
 		
+		JMenuItem newArtist = new JMenuItem("New Artist");
+		newArtist.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//TODO
+			}
+		});
+		
+		JMenuItem newStage = new JMenuItem("New Stage");
+		newStage.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//TODO
+			}
+		});
+		
 		JMenuItem open = new JMenuItem("Open");
 		open.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, ActionEvent.CTRL_MASK));
 		open.addActionListener(new ActionListener() {
@@ -54,6 +68,8 @@ public class MenuBar extends JMenuBar {
 		});
 		
 		file.add(newEvent);
+		file.add(newArtist);
+		file.add(newStage);
 		file.addSeparator();
 		file.add(open);
 		file.add(save);
@@ -82,8 +98,16 @@ public class MenuBar extends JMenuBar {
 			}
 		});
 		
+		JMenuItem art_sta = new JMenuItem("Artists and Stages");
+		art_sta.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Window.updatePanel("art_sta");
+			}
+		});
+		
 		view.add(timeline);
 		view.add(table);
+		view.add(art_sta);
 		add(view);
 	}
 }
