@@ -42,6 +42,14 @@ public class Agenda implements Serializable {
 	{
 		return events;
 	}
+	public ArrayList<Artist> getArtists()
+	{
+		return artists;
+	}
+	public ArrayList<Stage> getStages()
+	{
+		return stages;
+	}
 	
 	public void saveAgenda()
 	{

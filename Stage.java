@@ -32,4 +32,9 @@ public class Stage implements Serializable {
 	{
 		this.name = name;
 	}
+	
+	public String toString()
+	{
+		return name;
+	}
 }

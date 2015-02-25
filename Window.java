@@ -72,6 +72,9 @@ public class Window extends JFrame {
 		Panel tablePanel = new PanelTable();
 		panels.put("table", tablePanel);
 		
+		Panel art_staPanel = new PanelArtSta(this);
+		panels.put("art_sta", art_staPanel);
+		
 		//Main Panels
 		JPanel mainPanel = new JPanel(new BorderLayout());
 		centerPanel = new JPanel(new BorderLayout());
@@ -170,15 +173,13 @@ public class Window extends JFrame {
 	
 	private static void changePanel()
 	{
-		if(centerPanel.getComponents().length > 0)
-		{
-			centerPanel.remove(0);
-		}
+		centerPanel.removeAll();
 		Panel p = panels.get(currentPanel);
 		p.update(getEvents());
 		JPanel p1 = (JPanel) p;
 		p1.setPreferredSize(centerPanel.getSize());
 		centerPanel.add(p1, BorderLayout.CENTER);
+		centerPanel.revalidate();
 		centerPanel.repaint();
 		p1.repaint();
 	}

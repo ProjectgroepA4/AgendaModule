@@ -79,4 +79,9 @@ public class Artist implements Serializable{
 	{
 		this.background = background;
 	}
+	
+	public String toString()
+	{
+		return name;
+	}
 }
