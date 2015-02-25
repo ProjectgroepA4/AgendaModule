@@ -138,13 +138,8 @@ public class PanelTable extends JPanel implements Panel{
 	 * @param row
 	 */
 	private void openEventDialog(int row) {
-		JFrame frame = new JFrame();
 		Event event = events.get(row);
-		//the dialog				
-		frame.pack();
-		frame.setSize(300, 200);
-		frame.setLocationRelativeTo(this);
-		frame.setVisible(true);
+		new TabbedPane(event, true);				
 	}
 	
 	/**
@@ -152,13 +147,8 @@ public class PanelTable extends JPanel implements Panel{
 	 * @param row
 	 */
 	private void openArtistDialog(int row) {
-		JFrame frame = new JFrame();
-		Artist artist = events.get(row).getArtist();
-		//the dialog				
-		frame.pack();
-		frame.setSize(300, 200);
-		frame.setLocationRelativeTo(this);
-		frame.setVisible(true);
+		Event event = events.get(row);
+		new TabbedPane(event, false);				
 	}
 	
 	/**
