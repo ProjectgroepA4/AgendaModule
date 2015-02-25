@@ -1,35 +1,57 @@
-import java.io.Serializable;
+import java.util.ArrayList;
 
-public class Stage implements Serializable {
 
-	private static final long serialVersionUID = 1;
-	
-	private String name;
+public class Stage 
+{
+	private ArrayList<Event> performances;
+	private int expectedPopularity;
 	private String description;
+	private int length;
+	private int startTime,endTime;
 	
-	public Stage(String name, String description)
+	public Stage(ArrayList<Event> performances, int expectedPopularity, String description, int startTime, int endTime)
 	{
-		this.name = name;
+		this.performances = performances;
+		this.expectedPopularity = expectedPopularity;
 		this.description = description;
+		this.startTime = startTime;
+		this.endTime = endTime;
+		this.length = endTime - startTime;
 	}
 	
-	public String getName()
+	public void setStartTime(int startTime)
 	{
-		return this.name;
-	}
-		
-	public String getDescription()
-	{
-		return this.description;
+		this.startTime = startTime;
 	}
 	
-	public void setDescription(String description)
+	public void setEndTime(int endTime)
 	{
-		this.description = description;
+		this.endTime = endTime;
 	}
 	
-	public void setName(String name)
+	public ArrayList<Event> getPerformances()
 	{
-		this.name = name;
+		return performances;
 	}
+	
+//	public int getID()
+//	{
+//		return id + 100;
+//	}
+	
+	public int getLength()
+	{
+		return length;
+	}
+	
+	public int getStartTime()
+	{
+		return startTime;
+	}
+	
+	public int getEndTime()
+	{
+		return endTime;
+	}
+	
 }

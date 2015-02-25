@@ -67,6 +67,11 @@ public class StagePanel extends JPanel
 		stage.setStartTime(startTime);
 	}
 	
+	public void setStageEndTime(int endTime)
+	{
+		stage.setEndTime(endTime);
+	}
+	
 	public int getStageStartTime()
 	{
 		return stage.getStartTime();

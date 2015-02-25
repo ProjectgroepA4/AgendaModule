@@ -27,7 +27,7 @@ public class Timeline extends JPanel
 	private ArrayList<Stage> stages = new ArrayList<Stage>();
 	private JFrame frame;
 
-	//Geef dit object je JFrame mee, en zet in je JFrame de volgende code:
+//	Geef dit object je JFrame mee, en zet in je JFrame de volgende code:
 //	this.setContentPane(timeline.getTimeline());
 //	this.getRootPane().addComponentListener(new ComponentAdapter() 
 //	{
@@ -132,9 +132,10 @@ public class Timeline extends JPanel
 	{
 		int min = findMinMax(1);
 		int max = findMinMax(2);
-		System.out.println(stagepanel.getStageStartTime());
-		System.out.println(calcStartTimeOfStagePanel(stagepanel.getPosX()));
+//		System.out.println(stagepanel.getStageStartTime());
+//		System.out.println(calcStartTimeOfStagePanel(stagepanel.getPosX()));
 		stagepanel.setStageStartTime(calcStartTimeOfStagePanel(stagepanel.getPosX()));
+		stagepanel.setStageEndTime(calcEndTimeOfStagePanel(stagepanel.getPosX(), stagepanel.getImageWidth()));
 		refresh();
 		
 		
@@ -151,6 +152,21 @@ public class Timeline extends JPanel
 		lengthOfStage =  pixelsPerLength * (double)length;
 		
 		return (int)lengthOfStage;
+	}
+	
+	public int calcLengthOfStagePanel(int length)
+	{
+		double lengthOfStagePanel = 0;
+		int min = findMinMax(1);
+		int max = findMinMax(2);
+		System.out.println(length);
+		double frameWidth = frame.getWidth();
+		double pixelsPerLength = frameWidth / (max - min);
+		System.out.println(pixelsPerLength);
+		lengthOfStagePanel =  (double)length / pixelsPerLength;
+		System.out.println(lengthOfStagePanel);
+		
+		return (int)lengthOfStagePanel;
 	}
 	
 	public int calcPositionOfStage(int startTime)
@@ -187,6 +203,20 @@ public class Timeline extends JPanel
 		return (int)startTime;
 	}
 
+	public int calcEndTimeOfStagePanel(int posx, int imageWidth)
+	{
+		int min = findMinMax(1);
+		int max = findMinMax(2);
+		//Omdat het anders onnodig afgerond wordt, alles apart in doubles.
+		double minmax = max-min;
+		double bottom = frame.getWidth() / minmax;
+		double all = posx / bottom;
+		double endTime = all + min + calcLengthOfStagePanel(imageWidth);
+//		System.out.println(calcLengthOfStagePanel(imageWidth));
+//		System.out.println(endTime);
+		return (int)endTime;
+	}
+	
 	public int findMinMax(int i)
 	{
 		//		Event oldevent = new Event(0, 0, null, "Base", 0);
