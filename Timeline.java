@@ -50,12 +50,25 @@ public class Timeline extends JPanel
 	{
 		this.removeAll();	
 		createWestPanel();
-		createTopPanel();
-		createCenterPanel();
+		createMainPanel();
 		this.revalidate();
 	}
+	
+	private void createMainPanel()
+	{
+		JPanel mainPanel = new JPanel();
+		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+		Container topContainer = createTopPanel();
+		Dimension dim = new Dimension(frame.getWidth(), 60);
+		topContainer.setMaximumSize(dim);
+		mainPanel.add(topContainer);
+		Container centerContainer = createCenterPanel();
+		centerContainer.setMaximumSize(new Dimension(frame.getWidth(), frame.getHeight()));
+		mainPanel.add(centerContainer);
+		this.add(mainPanel, BorderLayout.CENTER);
+	}
 
-	private void createCenterPanel()
+	private JPanel createCenterPanel()
 	{
 
 		JPanel centerPanel = new JPanel();
@@ -111,7 +124,8 @@ public class Timeline extends JPanel
 			centerPanel.add(Box.createRigidArea(new Dimension(0,15)));
 		}
 
-		this.add(centerPanel, BorderLayout.CENTER);
+//		this.add(centerPanel, BorderLayout.CENTER);
+		return centerPanel;
 	}
 
 	public void resizeTimeline(StagePanel stagepanel)
@@ -121,6 +135,7 @@ public class Timeline extends JPanel
 		System.out.println(stagepanel.getStageStartTime());
 		System.out.println(calcStartTimeOfStagePanel(stagepanel.getPosX()));
 		stagepanel.setStageStartTime(calcStartTimeOfStagePanel(stagepanel.getPosX()));
+		refresh();
 		
 		
 	}
@@ -235,7 +250,7 @@ public class Timeline extends JPanel
 
 	}
 
-	private void createTopPanel()
+	private JPanel createTopPanel()
 	{
 		JPanel topPane = new JPanel();
 		topPane.setLayout(new BoxLayout(topPane, BoxLayout.Y_AXIS));
@@ -247,15 +262,24 @@ public class Timeline extends JPanel
 			topPanel.add(topImage);
 		}
 		topPane.add(Box.createRigidArea(new Dimension(0,20)));
+		JPanel panel = new JPanel();
+		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+		panel.add(Box.createRigidArea(new Dimension(10, 10)));
+		panel.add(new JLabel(Integer.toString(findMinMax(1))));
+		panel.add(Box.createHorizontalGlue());
+		panel.add(new JLabel(Integer.toString(findMinMax(2))));
+		panel.add(Box.createRigidArea(new Dimension(10, 10)));
+		topPane.add(panel);
 		topPane.add(topPanel);
-		this.add(topPane, BorderLayout.NORTH);
+//		this.add(topPane, BorderLayout.NORTH);
+		return topPane;
 	}
 
 	private void createWestPanel()
 	{
 		JPanel westPanel = new JPanel();
 		westPanel.setLayout(new BoxLayout(westPanel, BoxLayout.Y_AXIS));
-		westPanel.add(Box.createRigidArea(new Dimension(0, 30)));
+		westPanel.add(Box.createRigidArea(new Dimension(0, 100)));
 		for(int i = 0; i < stages.size(); i++)
 		{
 			JLabel stageText = new JLabel("Stage: " + (i+1) + "    ");
