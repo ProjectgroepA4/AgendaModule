@@ -11,12 +11,14 @@ public class Artist implements Serializable{
 	private String genre;
 	private ImageIcon image;
 	private String description;
+	private String background;
 	
-	public Artist(String name, String genre, String image, String description)
+	public Artist(String name, String genre, String image, String description, String background)
 	{
 		this.name = name;
 		this.genre = genre;
 		this.description = description;
+		this.background = background;
 		
 		if ( !image.equals("null")) {
 			this.image = new ImageIcon(image);
@@ -43,6 +45,11 @@ public class Artist implements Serializable{
 		return this.description;
 	}
 	
+	public String getBackground()
+	{
+		return this.background;
+	}
+	
 	public void setName(String name)
 	{
 		this.name = name;
@@ -66,5 +73,10 @@ public class Artist implements Serializable{
 	public void setDescription(String description)
 	{
 		this.description = description;
+	}
+	
+	public void setBackground(String background)
+	{
+		this.background = background;
 	}
 }
