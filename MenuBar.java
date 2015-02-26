@@ -48,9 +48,13 @@ public class MenuBar extends JMenuBar {
 		JMenuItem newAgenda = new JMenuItem("New Agenda");
 		newAgenda.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Agenda a = new Agenda();
-				w.setAgenda(a);
-				Window.updatePanel("table");
+				
+				if(JOptionPane.showConfirmDialog(null, "Are you sure you want to create a new agenda?", "New Agenda", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION)
+				{
+					Agenda a = new Agenda();
+					w.setAgenda(a);
+					Window.updatePanel("table");
+				}
 			}
 		});
 		
