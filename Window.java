@@ -75,6 +75,9 @@ public class Window extends JFrame {
 		Panel art_staPanel = new PanelArtSta(this);
 		panels.put("art_sta", art_staPanel);
 		
+		Panel timeline = new TimelinePanel();
+		panels.put("timeline", timeline);
+		
 		//Main Panels
 		JPanel mainPanel = new JPanel(new BorderLayout());
 		centerPanel = new JPanel(new BorderLayout());
