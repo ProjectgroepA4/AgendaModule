@@ -63,12 +63,11 @@ public class Timeline extends JPanel
 	public void refresh()
 	{
 		this.removeAll();	
-//		createWestPanel();
 		createMainPanel();
 		this.revalidate();
 	}
 	
-	private void createMainPanel()
+	public JPanel createMainPanel()
 	{
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
@@ -86,7 +85,8 @@ public class Timeline extends JPanel
 		centerContainer.setMaximumSize(centerDim);
 //		System.out.println(centerDim);
 		mainPanel.add(centerContainer);
-		this.add(mainPanel, BorderLayout.CENTER);
+//		this.add(mainPanel, BorderLayout.CENTER);
+		return mainPanel;
 	}
 
 	private JPanel createCenterPanel()
@@ -155,8 +155,8 @@ public class Timeline extends JPanel
 		int max = findMinMax(2);
 //		System.out.println(stagepanel.getStageStartTime());
 //		System.out.println(calcStartTimeOfStagePanel(stagepanel.getPosX()));
-		stagepanel.setStageStartTime(calcStartTimeOfStagePanel(stagepanel.getPosX()));
-		stagepanel.setStageEndTime(calcEndTimeOfStagePanel(stagepanel.getPosX(), stagepanel.getImageWidth()));
+		stagepanel.setStageStartTime(calcStartTimeOfStagePanelHours(stagepanel.getPosX()),calcStartTimeOfStagePanelMinutes(stagepanel.getPosX()));
+		stagepanel.setStageEndTime(calcEndTimeOfStagePanelHours(stagepanel.getPosX(), stagepanel.getImageWidth()),calcEndTimeOfStagePanelMinutes(stagepanel.getPosX(), stagepanel.getImageWidth()));
 //		stagepanel.setLength(calcLengthOfStagePanel(stagepanel.getImageWidth()));
 //		System.out.println(calcLengthOfStagePanel(stagepanel.getImageWidth()));
 		refresh();
@@ -206,7 +206,7 @@ public class Timeline extends JPanel
 		return posx;
 	}
 	
-	public int calcStartTimeOfStagePanel(int posx)
+	public int calcStartTimeOfStagePanelHours(int posx)
 	{
 		int min = findMinMax(1);
 		int max = findMinMax(2);
@@ -216,17 +216,23 @@ public class Timeline extends JPanel
 		double bottom = this.getWidth() / minmax;
 		double all = posx / bottom;
 		double startTime = all + min;
-		
-		
-//		System.out.println("starttime----------------");
-//		System.out.println("Frame: " + this.getWidth());
-//		System.out.println("startTime: " + startTime);
-//		System.out.println("Max: " + max + " min: " + min);
-//		System.out.println("Posx: " + posx);
-		return (int)startTime;
+		return (int)startTime / 100;
+	}
+	
+	public int calcStartTimeOfStagePanelMinutes(int posx)
+	{
+		int min = findMinMax(1);
+		int max = findMinMax(2);
+//		double startTime = (posx / (this.getWidth() / (max - min )) ) + min;
+		//Omdat het anders onnodig afgerond wordt, alles apart in doubles.
+		double minmax = max-min;
+		double bottom = this.getWidth() / minmax;
+		double all = posx / bottom;
+		double startTime = all + min;
+		return (int)startTime % 100;
 	}
 
-	public int calcEndTimeOfStagePanel(int posx, int imageWidth)
+	public int calcEndTimeOfStagePanelHours(int posx, int imageWidth)
 	{
 		int min = findMinMax(1);
 		int max = findMinMax(2);
@@ -235,9 +241,33 @@ public class Timeline extends JPanel
 		double bottom = this.getWidth() / minmax;
 		double all = posx / bottom;
 		double endTime = all + min + calcLengthOfStagePanel(imageWidth);
-//		System.out.println(calcLengthOfStagePanel(imageWidth));
-//		System.out.println(endTime);
-		return (int)endTime;
+		return (int)endTime / 100;
+	}
+	
+	public int calcEndTimeOfStagePanelMinutes(int posx, int imageWidth)
+	{
+		int min = findMinMax(1);
+		int max = findMinMax(2);
+		//Omdat het anders onnodig afgerond wordt, alles apart in doubles.
+		double minmax = max-min;
+		double bottom = this.getWidth() / minmax;
+		double all = posx / bottom;
+		double endTime = all + min + calcLengthOfStagePanel(imageWidth);
+		return (int)endTime % 100;
+	}
+	
+	public int intToTime(int time, String option)
+	{
+		if(option == "hours")
+		{
+			time = time % 24;
+		}
+		else if(option == "minutes")
+		{
+			time = time % 60;
+		}
+		System.out.println(time);
+		return time;
 	}
 	
 	public int findMinMax(int i)
@@ -306,7 +336,7 @@ public class Timeline extends JPanel
 		JPanel topPanel = new JPanel(new FlowLayout());
 		for(int i = 0; i <= this.getWidth() / 10; i++)
 		{
-			ImageIcon topImageIcon = new ImageIcon("src/test2.png");
+			ImageIcon topImageIcon = new ImageIcon("src/sprites/block.png");
 			JLabel topImage = new JLabel(topImageIcon);
 			topPanel.add(topImage);
 		}
@@ -365,4 +395,5 @@ public class Timeline extends JPanel
 		return this;
 	}
 
+	
 }

@@ -123,7 +123,7 @@ public class Event implements Serializable {
 	{
 		DateFormat format = new SimpleDateFormat("kkmm");
 		format.setLenient(false);
-		System.out.println(format.format(startDate.getTime()));
+//		System.out.println(format.format(startDate.getTime()));
 		
 //		System.out.println(date.get(Calendar.HOUR_OF_DAY));
 		
@@ -134,18 +134,24 @@ public class Event implements Serializable {
 	{
 		DateFormat format = new SimpleDateFormat("kkmm");
 		format.setLenient(false);
-		System.out.println(format.format(endDate.getTime()));
+//		System.out.println(format.format(endDate.getTime()));
 		return Integer.valueOf(format.format(endDate.getTime()));
 	}
 	
-	public void setStartTime(int time)
+	public void setStartTime(int hours, int minutes)
 	{
-		startDate.set(Calendar.HOUR, 6);
+//		System.out.println("Start:" + hours + ":" + minutes);
+		startDate.set(Calendar.HOUR_OF_DAY, hours);
+		startDate.set(Calendar.MINUTE, minutes);
+//		System.out.println(startDate.getTime());
 	}
 	
-	public void setEndTime(int time)
+	public void setEndTime(int hours, int minutes)
 	{
-		
+//		System.out.println("End:" + hours + ":" + minutes);
+		endDate.set(Calendar.HOUR_OF_DAY, hours);
+		endDate.set(Calendar.MINUTE, minutes);
+//		System.out.println(endDate.getTime());
 	}
 
 	public String toString() {
