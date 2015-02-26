@@ -12,12 +12,11 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-
-public class EditArtistPanel extends JFrame{
+public class EditArtistPanel extends JFrame {
 
 	private static final long serialVersionUID = 1;
 
-	public EditArtistPanel(Agenda agenda, Artist art)
+	public EditArtistPanel(Agenda agenda, Artist art, TabbedPane tab)
 	{
 		super("Artist editscreen!");
 		setDefaultCloseOperation(HIDE_ON_CLOSE);
@@ -113,6 +112,20 @@ public class EditArtistPanel extends JFrame{
 					setVisible(false);
 					dispose();
 					Window.updatePanel("art_sta");
+					if(tab != null)
+					{
+					tab.setVisible(false);
+					tab.dispose();
+					Event eventartist = null;
+					for(Event event: agenda.getEvents())
+					{
+						if (event.getArtist().getName().equals(name))
+						{
+							eventartist = event;
+						}
+					}
+					TabbedPane panel = new TabbedPane(agenda, eventartist, false);
+					}
 				} else {
 					JOptionPane.showMessageDialog(null, "Choose a different artist name!");
 				}
@@ -150,6 +163,11 @@ public class EditArtistPanel extends JFrame{
 					setVisible(false);
 					dispose();
 					Window.updatePanel("art_sta");
+					if(tab != null)
+					{
+					tab.setVisible(false);
+					tab.dispose();
+					}
 				}
 			}
 		});
@@ -159,5 +177,5 @@ public class EditArtistPanel extends JFrame{
 		setVisible(true);
 		setSize(500,320);
 	}
-
+	
 }

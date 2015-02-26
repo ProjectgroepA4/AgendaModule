@@ -19,7 +19,7 @@ public class EventPanel extends JPanel{
 
 	private static final long serialVersionUID = 504733981352439417L;
 
-	public EventPanel(Event event, Agenda a)
+	public EventPanel(Event event, Agenda a, TabbedPane tab)
 	{
 		super(new BorderLayout());
 		SimpleDateFormat dateformatter = new SimpleDateFormat("dd-MM-yyyy");
@@ -38,7 +38,7 @@ public class EventPanel extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
-				EditEventPanel edit = new EditEventPanel(a, event);
+				EditEventPanel edit = new EditEventPanel(a, event, tab);
 			}
 		});
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));

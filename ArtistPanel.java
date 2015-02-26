@@ -16,7 +16,7 @@ import javax.swing.SwingConstants;
 
 public class ArtistPanel extends JPanel{
 
-	public ArtistPanel(Event event, Agenda a)
+	public ArtistPanel(Event event, Agenda a, TabbedPane tab)
 	{
 		super(new BorderLayout());
 		JLabel name = new JLabel(event.getArtist().getName());
@@ -25,7 +25,7 @@ public class ArtistPanel extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
-				EditArtistPanel editter = new EditArtistPanel(a, event.getArtist());
+				EditArtistPanel editter = new EditArtistPanel(a, event.getArtist(), tab);
 			}
 		});
 		name.setFont(new Font("Dialog", Font.BOLD, 20));
@@ -46,4 +46,5 @@ public class ArtistPanel extends JPanel{
 		add(description, BorderLayout.CENTER);
 		add(panel, BorderLayout.NORTH);
 	}
+	
 }

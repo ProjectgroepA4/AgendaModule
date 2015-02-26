@@ -34,7 +34,7 @@ public class PanelArtSta extends JPanel implements Panel{
 
 			        if (artists.getSelectedIndex() == -1) {
 			        } else {
-			            new EditArtistPanel(w.getAgenda(), a.getArtists().get(artists.getSelectedIndex()));
+			            new EditArtistPanel(w.getAgenda(), a.getArtists().get(artists.getSelectedIndex()), null);
 			            artists.clearSelection();
 			        }
 			    }

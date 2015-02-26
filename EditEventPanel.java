@@ -21,7 +21,7 @@ public class EditEventPanel extends JFrame{
 
 	private static final long serialVersionUID = 1;
 
-	public EditEventPanel(Agenda agenda, Event e)
+	public EditEventPanel(Agenda agenda, Event e, TabbedPane tab)
 	{
 		super("Event editscreen!");
 		setDefaultCloseOperation(HIDE_ON_CLOSE);
@@ -271,6 +271,20 @@ public class EditEventPanel extends JFrame{
 					setVisible(false);
 					dispose();
 					Window.updatePanel("table");
+					if(tab != null)
+					{
+					tab.setVisible(false);
+					tab.dispose();
+					Event eventartist = null;
+					for(Event event: agenda.getEvents())
+					{
+						if (event.getEventName().equals(name))
+						{
+							eventartist = event;
+						}
+					}
+					TabbedPane panel = new TabbedPane(agenda, eventartist, true);
+					}
 				}
 				
 				
@@ -300,6 +314,11 @@ public class EditEventPanel extends JFrame{
 					setVisible(false);
 					dispose();
 					Window.updatePanel("table");
+					if(tab != null)
+					{
+					tab.setVisible(false);
+					tab.dispose();
+					}
 				}
 			}
 		});
@@ -308,7 +327,6 @@ public class EditEventPanel extends JFrame{
 		setContentPane(content);
 		setVisible(true);
 		setSize(700,320);
-		
 	}
 	
 	public int monthToInt(String month)
@@ -352,5 +370,6 @@ public class EditEventPanel extends JFrame{
 		}
 		return number;		
 	}
+	
 
 }
