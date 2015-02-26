@@ -69,7 +69,7 @@ public class Window extends JFrame {
 		 */
 		
 		//Agenda Panels
-		Panel tablePanel = new PanelTable();
+		Panel tablePanel = new PanelTable(agenda);
 		panels.put("table", tablePanel);
 		
 		Panel art_staPanel = new PanelArtSta(this);

@@ -6,7 +6,7 @@ import javax.swing.JTabbedPane;
 
 public class TabbedPane extends JFrame{
 
-	public TabbedPane(Event event, boolean eventSelected)
+	public TabbedPane(Agenda a, Event event, boolean eventSelected)
 	{
 		super("info GUI");
 		JTabbedPane tab = new JTabbedPane();

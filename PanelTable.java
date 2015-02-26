@@ -40,13 +40,15 @@ public class PanelTable extends JPanel implements Panel{
 	private ArrayList<Event> fullEvents;
 	private JTable table;
 	private JTable selectedCell;
+	private Agenda a;
 	
 	/**
 	 * Constructor makes the table and adds it to a scrollPane.
 	 * @param events
 	 */
-	public PanelTable() {
+	public PanelTable(Agenda a) {
 		super.setLayout(new BorderLayout());
+		this.a = a;
 		table= new JTable();
 		table.setAutoCreateRowSorter(true);
 		table.setAutoResizeMode(table.AUTO_RESIZE_ALL_COLUMNS);
@@ -139,7 +141,7 @@ public class PanelTable extends JPanel implements Panel{
 	 */
 	private void openEventDialog(int row) {
 		Event event = events.get(row);
-		new TabbedPane(event, true);				
+		new TabbedPane(a, event, true);				
 	}
 	
 	/**
@@ -148,7 +150,7 @@ public class PanelTable extends JPanel implements Panel{
 	 */
 	private void openArtistDialog(int row) {
 		Event event = events.get(row);
-		new TabbedPane(event, false);				
+		new TabbedPane(a, event, false);				
 	}
 	
 	/**
