@@ -84,7 +84,7 @@ public class Timeline extends JPanel
 		centerContainer.setPreferredSize(centerDim);
 
 		centerContainer.setMaximumSize(centerDim);
-		System.out.println(centerDim);
+//		System.out.println(centerDim);
 		mainPanel.add(centerContainer);
 		this.add(mainPanel, BorderLayout.CENTER);
 	}

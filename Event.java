@@ -1,6 +1,8 @@
 import java.io.Serializable;
 import java.text.DateFormat;
+import java.text.Format;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 public class Event implements Serializable {
@@ -114,24 +116,31 @@ public class Event implements Serializable {
 	
 	public int getLength()
 	{
-		GregorianCalendar length = endDate;
-		System.out.println(endDate.getTime());
-		return 10;
+		return getEndTime() - getStartTime();
 	}
 	
 	public int getStartTime()
 	{
-		return 1800;
+		DateFormat format = new SimpleDateFormat("kkmm");
+		format.setLenient(false);
+		System.out.println(format.format(startDate.getTime()));
+		
+//		System.out.println(date.get(Calendar.HOUR_OF_DAY));
+		
+		return Integer.valueOf(format.format(startDate.getTime()));
 	}
 	
 	public int getEndTime()
 	{
-		return 2100;
+		DateFormat format = new SimpleDateFormat("kkmm");
+		format.setLenient(false);
+		System.out.println(format.format(endDate.getTime()));
+		return Integer.valueOf(format.format(endDate.getTime()));
 	}
 	
 	public void setStartTime(int time)
 	{
-		
+		startDate.set(Calendar.HOUR, 6);
 	}
 	
 	public void setEndTime(int time)
