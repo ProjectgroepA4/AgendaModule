@@ -1,70 +1,27 @@
-import java.io.Serializable;
-
 import javax.swing.ImageIcon;
 
 
-public class Artist implements Serializable{
-
-	private static final long serialVersionUID = 1;
-	
-	private String name;
+public class Artist 
+{
 	private String genre;
-	private ImageIcon image;
+	private String name;
 	private String description;
+	private ImageIcon image;
+	private int id;
 	
-	public Artist(String name, String genre, String image, String description)
+	public Artist(String genre, String name, String description, ImageIcon image, int id)
 	{
-		this.name = name;
 		this.genre = genre;
+		this.name = name;
 		this.description = description;
-		
-		if ( !image.equals("null")) {
-			this.image = new ImageIcon(image);
-		} 
-	}
-	
-	public String getName()
-	{
-		return this.name;
-	}
-	
-	public String getGenre()
-	{
-		return this.genre;
-	}
-	
-	public ImageIcon getImage()
-	{
-		return this.image;
-	}
-	
-	public String getDescription()
-	{
-		return this.description;
-	}
-	
-	public void setName(String name)
-	{
-		this.name = name;
-	}
-	
-	public void setGenre(String genre)
-	{
-		this.genre = genre;
-	}
-	
-	public void setImageIconString(String image)
-	{
-		this.image = new ImageIcon(image);
-	}
-	
-	public void setImageIcon(ImageIcon image)
-	{
 		this.image = image;
+		this.id = id;
 	}
 	
-	public void setDescription(String description)
+	public int getID()
 	{
-		this.description = description;
+		return id;
 	}
+	
+	
 }
