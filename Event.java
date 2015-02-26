@@ -111,6 +111,13 @@ public class Event implements Serializable {
 	public void setStage(Stage stage) {
 		this.stage = stage;
 	}
+	
+	public GregorianCalendar getLength()
+	{
+		GregorianCalendar length = endDate;
+		System.out.println(endDate.getTime());
+		return length;
+	}
 
 	public String toString() {
 		DateFormat format = new SimpleDateFormat("dd-MM-yyyy");

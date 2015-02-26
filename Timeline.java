@@ -13,6 +13,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -26,7 +27,7 @@ import javax.swing.JPanel;
 @SuppressWarnings({ "serial" })
 public class Timeline extends JPanel
 {
-	private ArrayList<Stage> stages = new ArrayList<Stage>();
+	private ArrayList<Event> events = new ArrayList<Event>();
 	private JPanel frame;
 
 //	Geef dit object je JFrame mee, en zet in je JFrame de volgende code:
@@ -87,9 +88,9 @@ public class Timeline extends JPanel
 		centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
 		centerPanel.add(Box.createRigidArea(new Dimension(0, 30)));
 
-		for(Stage stage : stages)
+		for(Event event : events)
 		{
-			StagePanel stagepanel = new StagePanel(calcLengthOfStage(stage.getLength()), 30, calcPositionOfStage(stage.getStartTime()), stage);
+			StagePanel stagepanel = new StagePanel(calcLengthOfStage(event.getLength()), 30, calcPositionOfStage(event.getStartTime()), event);
 			Container content = stagepanel;
 			content.setMaximumSize(new Dimension(this.getWidth(),30));
 			content.addMouseListener(new MouseListener() {
@@ -218,8 +219,8 @@ public class Timeline extends JPanel
 
 	public int calcEndTimeOfStagePanel(int posx, int imageWidth)
 	{
-		int min = findMinMax(1);
-		int max = findMinMax(2);
+		GregorianCalendar min = findMinMax(1);
+		GregorianCalendar max = findMinMax(2);
 		//Omdat het anders onnodig afgerond wordt, alles apart in doubles.
 		double minmax = max-min;
 		double bottom = this.getWidth() / minmax;
@@ -235,27 +236,27 @@ public class Timeline extends JPanel
 		//		Event oldevent = new Event(0, 0, null, "Base", 0);
 		//		ArrayList<Event> oldevents = new ArrayList<Event>();
 		//		oldevents.add(oldevent);
-		//		Stage oldstage = new Stage(oldevents,0,null, 0, 0);
-		ArrayList<Stage> stagescopy = (ArrayList<Stage>) stages.clone();
+		//		Steage oldstage = new Stage(oldevents,0,null, 0, 0);
+		ArrayList<Event> eventscopy = (ArrayList<Event>) events.clone();
 
-		Integer earliestStartTime = null;
-		Integer lastEndTime = null;
+		GregorianCalendar earliestStartTime = null;
+		GregorianCalendar lastEndTime = null;
 
-		for(Stage stage : stagescopy)
+		for(Event event : eventscopy)
 		{
 			if(i == 1)
 			{
 				if(earliestStartTime == null)
 				{
 
-					earliestStartTime = stage.getStartTime();
+					earliestStartTime = event.getStartDate();
 				}
 
 				else
 				{
-					if(stage.getStartTime() < earliestStartTime)
+					if(event.getStartDate() < earliestStartTime)
 					{
-						earliestStartTime = stage.getStartTime();
+						earliestStartTime = event.getStartDate();
 					}
 				}
 			}
@@ -263,13 +264,13 @@ public class Timeline extends JPanel
 			{
 				if(lastEndTime == null)
 				{
-					lastEndTime = stage.getEndTime();
+					lastEndTime = event.getEndDate();
 				}
 				else
 				{
-					if(stage.getEndTime() > lastEndTime)
+					if(event.getEndDate() > lastEndTime)
 					{
-						lastEndTime = stage.getEndTime();
+						lastEndTime = event.getEndDate();
 					}
 				}
 			}
@@ -319,7 +320,7 @@ public class Timeline extends JPanel
 		JPanel westPanel = new JPanel();
 		westPanel.setLayout(new BoxLayout(westPanel, BoxLayout.Y_AXIS));
 		westPanel.add(Box.createRigidArea(new Dimension(0, 100)));
-		for(int i = 0; i < stages.size(); i++)
+		for(int i = 0; i < events.size(); i++)
 		{
 			JLabel stageText = new JLabel("Stage: " + (i+1) + "    ");
 			westPanel.add(stageText);
@@ -331,22 +332,22 @@ public class Timeline extends JPanel
 
 	private void genStages()
 	{
-		ImageIcon image = new ImageIcon();
-		Artist artist2 = new Artist("Henk", "paul2", "kaas", image, 2);
-		Artist artist1 = new Artist("Kaas", "Paul", "Lala", image, 1);
-		Event event2 = new Event(1900, 2000, artist2, "hi2", 2);
-		Event event1 = new Event(600, 1800, artist1, "hi", 1);
-		ArrayList<Event> performances = new ArrayList<Event>();
-		performances.add(event1);
-		performances.add(event2);
-		Stage stage1 = new Stage(performances, 100, null, 1800, 2100);
-		stages.add(stage1);
-		Stage stage2 = new Stage(performances, 100, null, 1700, 1900);
-		Stage stage3 = new Stage(performances, 100, null, 1600, 1800);
-		Stage stage4 = new Stage(performances, 100, null, 1600, 2100);
-		stages.add(stage3);
-		stages.add(stage2);
-//		stages.add(stage4);
+//		ImageIcon image = new ImageIcon();
+//		Artist artist2 = new Artist("Henk", "paul2", "kaas", image, 2);
+//		Artist artist1 = new Artist("Kaas", "Paul", "Lala", image, 1);
+//		Event event2 = new Event(1900, 2000, artist2, "hi2", 2);
+//		Event event1 = new Event(600, 1800, artist1, "hi", 1);
+//		ArrayList<Event> performances = new ArrayList<Event>();
+//		performances.add(event1);
+//		performances.add(event2);
+//		Stage stage1 = new Stage(performances, 100, null, 1800, 2100);
+//		events.add(stage1);
+//		Stage stage2 = new Stage(performances, 100, null, 1700, 1900);
+//		Stage stage3 = new Stage(performances, 100, null, 1600, 1800);
+//		Stage stage4 = new Stage(performances, 100, null, 1600, 2100);
+//		events.add(stage3);
+//		events.add(stage2);
+////		stages.add(stage4);
 
 	}
 

@@ -1,9 +1,10 @@
 import java.awt.BorderLayout;
+import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
 
-public class TimelinePanel extends JPanel {
+public class TimelinePanel extends JPanel implements Panel {
 
 	private Timeline timeline;
 	
@@ -21,6 +22,13 @@ public class TimelinePanel extends JPanel {
 	public void refresh()
 	{
 		timeline.refresh();
+	}
+
+	@Override
+	public void update(ArrayList<Event> event) 
+	{
+		// TODO Auto-generated method stub
+		
 	}
 
 }
