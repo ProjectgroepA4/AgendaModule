@@ -53,7 +53,7 @@ public class MenuBar extends JMenuBar {
 				{
 					Agenda a = new Agenda();
 					w.setAgenda(a);
-					Window.updatePanel("table");
+					Window.updatePanel();
 				}
 			}
 		});
@@ -63,7 +63,7 @@ public class MenuBar extends JMenuBar {
 		open.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				w.getAgenda().loadAgenda();
-				Window.updatePanel("table");
+				Window.updatePanel();
 			}
 		});
 		
@@ -72,7 +72,7 @@ public class MenuBar extends JMenuBar {
 		save.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				w.getAgenda().saveAgenda();
-				Window.updatePanel("table");
+				Window.updatePanel();
 			}
 		});
 		
@@ -108,21 +108,21 @@ public class MenuBar extends JMenuBar {
 		JMenuItem timeline = new JMenuItem("Timeline");
 		timeline.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Window.updatePanel("timeline");
+				Window.changePanel("timeline");
 			}
 		});
 		
 		JMenuItem table = new JMenuItem("Table");
 		table.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Window.updatePanel("table");
+				Window.changePanel("table");
 			}
 		});
 		
 		JMenuItem art_sta = new JMenuItem("Artists and Stages");
 		art_sta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Window.updatePanel("art_sta");
+				Window.changePanel("art_sta");
 			}
 		});
 		

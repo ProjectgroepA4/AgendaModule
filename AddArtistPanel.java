@@ -108,7 +108,7 @@ public class AddArtistPanel extends JFrame{
 				JOptionPane.showMessageDialog(null, "Artist added!");
 				setVisible(false);
 				dispose();
-				Window.updatePanel("art_sta");
+				Window.updatePanel();
 				} else {
 					JOptionPane.showMessageDialog(null, "Choose a different artist name!");
 				}

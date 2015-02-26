@@ -75,7 +75,7 @@ public class EditStagePanel extends JFrame{
 					JOptionPane.showMessageDialog(null, "Stage edited!");
 					setVisible(false);
 					dispose();
-					Window.updatePanel("art_sta");
+					Window.updatePanel();
 				}
 				else {
 					JOptionPane.showMessageDialog(null, "Choose a different stage name!");				
@@ -113,7 +113,7 @@ public class EditStagePanel extends JFrame{
 					JOptionPane.showMessageDialog(null, "Stage removed!");
 					setVisible(false);
 					dispose();
-					Window.updatePanel("art_sta");
+					Window.updatePanel();
 				}
 			}
 		});

@@ -248,7 +248,7 @@ public class AddEventPanel extends JFrame{
 					JOptionPane.showMessageDialog(null, "Event added!");
 					setVisible(false);
 					dispose();
-					Window.updatePanel("table");
+					Window.updatePanel();
 				}
 				
 				

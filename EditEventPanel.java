@@ -270,7 +270,7 @@ public class EditEventPanel extends JFrame{
 					JOptionPane.showMessageDialog(null, "Event edited!");
 					setVisible(false);
 					dispose();
-					Window.updatePanel("table");
+					Window.updatePanel();
 				}
 				
 				
@@ -299,7 +299,7 @@ public class EditEventPanel extends JFrame{
 					JOptionPane.showMessageDialog(null, "Event removed!");
 					setVisible(false);
 					dispose();
-					Window.updatePanel("table");
+					Window.updatePanel();
 				}
 			}
 		});

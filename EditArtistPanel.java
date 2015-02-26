@@ -112,7 +112,7 @@ public class EditArtistPanel extends JFrame{
 					JOptionPane.showMessageDialog(null, "Artist edited!");
 					setVisible(false);
 					dispose();
-					Window.updatePanel("art_sta");
+					Window.updatePanel();
 				} else {
 					JOptionPane.showMessageDialog(null, "Choose a different artist name!");
 				}
@@ -149,7 +149,7 @@ public class EditArtistPanel extends JFrame{
 					JOptionPane.showMessageDialog(null, "Artist removed!");
 					setVisible(false);
 					dispose();
-					Window.updatePanel("art_sta");
+					Window.updatePanel();
 				}
 			}
 		});

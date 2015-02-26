@@ -95,7 +95,7 @@ public class Window extends JFrame {
 			public void actionPerformed(ActionEvent e) {	
 				date.set(GregorianCalendar.DAY_OF_MONTH, date.get(GregorianCalendar.DAY_OF_MONTH) - 7);
 				dateLabel.setText(formatter.format(date.getTime()));
-				changePanel();
+				updatePanel();
 			}
 		});
 		bottomPanel.add(new JSeparator(SwingConstants.VERTICAL));
@@ -108,7 +108,7 @@ public class Window extends JFrame {
 			public void actionPerformed(ActionEvent e) {	
 				date.set(GregorianCalendar.DAY_OF_MONTH, date.get(GregorianCalendar.DAY_OF_MONTH) - 1);
 				dateLabel.setText(formatter.format(date.getTime()));
-				changePanel();
+				updatePanel();
 			}
 		});
 		bottomPanel.add(new JSeparator(SwingConstants.VERTICAL));
@@ -121,7 +121,7 @@ public class Window extends JFrame {
 			public void actionPerformed(ActionEvent e) {	
 				date = new GregorianCalendar();
 				dateLabel.setText(formatter.format(date.getTime()));
-				changePanel();
+				updatePanel();
 			}
 		});
 		bottomPanel.add(new JSeparator(SwingConstants.VERTICAL));
@@ -134,7 +134,7 @@ public class Window extends JFrame {
 			public void actionPerformed(ActionEvent e) {	
 				date.set(GregorianCalendar.DAY_OF_MONTH, date.get(GregorianCalendar.DAY_OF_MONTH) + 1);
 				dateLabel.setText(formatter.format(date.getTime()));
-				changePanel();
+				updatePanel();
 			}
 		});
 		bottomPanel.add(new JSeparator(SwingConstants.VERTICAL));
@@ -147,7 +147,7 @@ public class Window extends JFrame {
 			public void actionPerformed(ActionEvent e) {	
 				date.set(GregorianCalendar.DAY_OF_MONTH, date.get(GregorianCalendar.DAY_OF_MONTH) + 7);
 				dateLabel.setText(formatter.format(date.getTime()));
-				changePanel();
+				updatePanel();
 			}
 		});
 		bottomPanel.add(new JSeparator(SwingConstants.VERTICAL));
@@ -159,19 +159,19 @@ public class Window extends JFrame {
 		
 		setContentPane(mainPanel);
 		
-		changePanel();
+		updatePanel();
 		
 		//Show window
 		setVisible(true);
 	}
 	
-	public static void updatePanel(String panel)
+	public static void changePanel(String panel)
 	{
 		currentPanel = panel;
-		changePanel();
+		updatePanel();
 	}
 	
-	private static void changePanel()
+	public static void updatePanel()
 	{
 		centerPanel.removeAll();
 		Panel p = panels.get(currentPanel);
