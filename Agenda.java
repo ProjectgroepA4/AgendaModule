@@ -128,6 +128,7 @@ public class Agenda implements Serializable {
 			{
 				clearAgenda();
 				fillAgenda(file);
+				JOptionPane.showMessageDialog(null, "Loaded succesfully");
 			}
 		}
 		}
@@ -201,6 +202,7 @@ public class Agenda implements Serializable {
 				oos.writeObject(event);
 			}
 			oos.close();
+			JOptionPane.showMessageDialog(null, "Saved succesfully");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

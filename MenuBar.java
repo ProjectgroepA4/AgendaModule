@@ -5,6 +5,7 @@ import java.awt.event.KeyEvent;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 
 
@@ -44,11 +45,21 @@ public class MenuBar extends JMenuBar {
 			}
 		});
 		
+		JMenuItem newAgenda = new JMenuItem("New Agenda");
+		newAgenda.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Agenda a = new Agenda();
+				w.setAgenda(a);
+				Window.updatePanel("table");
+			}
+		});
+		
 		JMenuItem open = new JMenuItem("Open");
 		open.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, ActionEvent.CTRL_MASK));
 		open.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				w.getAgenda().loadAgenda();
+				Window.updatePanel("table");
 			}
 		});
 		
@@ -57,19 +68,25 @@ public class MenuBar extends JMenuBar {
 		save.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				w.getAgenda().saveAgenda();
+				Window.updatePanel("table");
 			}
 		});
 		
 		JMenuItem exit = new JMenuItem("Exit"); 
 		exit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.exit(0);
+				if(JOptionPane.showConfirmDialog(null, "Are you sure you want to close this program?", "Close Agenda", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION)
+				{
+					System.exit(0);
+				}
 			}
 		});
 		
 		file.add(newEvent);
 		file.add(newArtist);
 		file.add(newStage);
+		file.addSeparator();
+		file.add(newAgenda);
 		file.addSeparator();
 		file.add(open);
 		file.add(save);

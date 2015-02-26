@@ -210,5 +210,10 @@ public class Window extends JFrame {
 		return agenda;
 	}
 	
+	public void setAgenda(Agenda a)
+	{
+		agenda = a; 
+	}
+	
 	
 }
