@@ -126,8 +126,19 @@ public class Event implements Serializable {
 //		System.out.println(format.format(startDate.getTime()));
 		
 //		System.out.println(date.get(Calendar.HOUR_OF_DAY));
-		
-		return Integer.valueOf(format.format(startDate.getTime()));
+		int time = Integer.valueOf(format.format(startDate.getTime()));
+		int hours = time/100;
+		int minutes = time%100;
+		int finaltime;
+		if(minutes != 0)
+		{
+			finaltime = hours*60 + minutes;
+		}
+		else
+		{
+			finaltime = hours*60;
+		}
+		return finaltime;
 	}
 	
 	public int getEndTime()
@@ -135,7 +146,20 @@ public class Event implements Serializable {
 		DateFormat format = new SimpleDateFormat("kkmm");
 		format.setLenient(false);
 //		System.out.println(format.format(endDate.getTime()));
-		return Integer.valueOf(format.format(endDate.getTime()));
+		int time = Integer.valueOf(format.format(endDate.getTime()));
+		int hours = time/100;
+		int minutes = time%100;
+		int finaltime;
+		if(minutes != 0)
+		{
+			finaltime = hours*60 + minutes;
+		}
+		else
+		{
+			finaltime = hours*60;
+		}
+		
+		return finaltime;
 	}
 	
 	public void setStartTime(int hours, int minutes)

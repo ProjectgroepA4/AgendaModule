@@ -13,13 +13,16 @@ public class StagePanel extends JPanel
 {
 	private BufferedImage image;
 	private int width, height, posX;
+	private double widthD, posXD;
 	private Event event;
-	public StagePanel(int width, int height, int posX, Event event) 
+	public StagePanel(int width, int height, int posX, Event event, double widthD, double posXD) 
 	{
 		this.width = width;
 		this.height = height;
 		this.posX = posX;
 		this.event = event;
+		this.widthD = widthD;
+		this.posXD = posXD;
 		image = new BufferedImage(this.width, this.height, BufferedImage.TYPE_INT_ARGB);
 		Graphics2D g2 = image.createGraphics();
 		g2.setColor(Color.blue);
@@ -44,9 +47,10 @@ public class StagePanel extends JPanel
 
 	}
 	
-	public void update(int posx)
+	public void update(int posx, double posXD)
 	{
 		this.posX = posx;
+		this.posXD = posXD;
 		repaint();
 	}
 	
@@ -57,14 +61,15 @@ public class StagePanel extends JPanel
 
 	}
 	
-	public int getPosX()
+	public double getPosX()
 	{
-		return this.posX;
+		return this.posXD;
 	}
 	
-	public void setLength(int length)
+	public void setLength(int length, double widthD)
 	{
 		this.width = length;
+		this.widthD = widthD;
 	}
 	
 	public void setStageStartTime(int hours, int minutes)
@@ -82,9 +87,9 @@ public class StagePanel extends JPanel
 		return event.getStartTime();
 	}
 	
-	public int getImageWidth()
+	public double getImageWidth()
 	{
-		return this.width;
+		return this.widthD;
 	}
 
 }

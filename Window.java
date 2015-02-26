@@ -173,6 +173,7 @@ public class Window extends JFrame {
 			public void componentResized(ComponentEvent e) {
                 TimelinePanel tempTimeLine = (TimelinePanel) timeline;
                 tempTimeLine.refresh();
+//                System.out.println("WINDOWS: " + tempframe.getWidth());
             }
 		});
 	}
