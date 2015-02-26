@@ -74,7 +74,7 @@ public class AddStagePanel extends JFrame{
 					JOptionPane.showMessageDialog(null, "Stage added!");
 					setVisible(false);
 					dispose();
-					Window.updatePanel("art_sta");
+					Window.updatePanel();
 				}
 				else {
 					JOptionPane.showMessageDialog(null, "Choose a different stage name!");				
