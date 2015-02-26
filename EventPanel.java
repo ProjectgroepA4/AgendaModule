@@ -1,10 +1,15 @@
 
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
@@ -14,7 +19,7 @@ public class EventPanel extends JPanel{
 
 	private static final long serialVersionUID = 504733981352439417L;
 
-	public EventPanel(Event event)
+	public EventPanel(Event event, Agenda a)
 	{
 		super(new BorderLayout());
 		SimpleDateFormat dateformatter = new SimpleDateFormat("dd-MM-yyyy");
@@ -28,8 +33,16 @@ public class EventPanel extends JPanel{
 		JPanel row = new JPanel();
 		row.setLayout(new BoxLayout(row, BoxLayout.LINE_AXIS));
 		JPanel panel = new JPanel();
+		JButton edit = new JButton("Edit Info");
+		edit.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				EditEventPanel edit = new EditEventPanel(a, event);
+			}
+		});
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-		JLabel title = new JLabel("<html>" + event.getEventName() + "</html>");
+		JLabel title = new JLabel(event.getEventName());
 		JLabel date = new JLabel("<html>" + dateformatter.format(event.getEndDate().getTime()) + "</html>");
 		JLabel data = new JLabel("<html> " + event.getStage().getName() +  "<br> <br>" + event.getArtist().getName() + "<br> <br>" + event.getExpectedPopularity() + "<br> <br>" + timeformatter.format(event.getStartDate().getTime()) + " - " + timeformatter.format(event.getEndDate().getTime()) + "<br> <br> </html>");
 		JLabel text = new JLabel("<html> Podium: <br> <br> Artiest: <br> <br> Populariteit: <br> <br> Tijd: <br> <br> </html>");
@@ -43,6 +56,9 @@ public class EventPanel extends JPanel{
 		JLabel description = new JLabel("<html> <b> Beschrijving </b> <br> <br>" + event.getDescription() + "</html>");
 		description.setFont(new Font("Dialog", Font.PLAIN, 12));
 		row.add(title);
+		row.add(Box.createRigidArea(new Dimension(10,0)));
+		row.add(edit);
+		row.add(Box.createRigidArea(new Dimension(30,0)));
 		row.add(date);
 		box1.add(row);
 		box1.add(new JSeparator(SwingConstants.HORIZONTAL));

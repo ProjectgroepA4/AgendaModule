@@ -10,8 +10,8 @@ public class TabbedPane extends JFrame{
 	{
 		super("info GUI");
 		JTabbedPane tab = new JTabbedPane();
-		tab.add("Event", new EventPanel(event));
-		tab.add("Artist", new ArtistPanel(event));
+		tab.add("Event", new EventPanel(event, a));
+		tab.add("Artist", new ArtistPanel(event, a));
 		if(eventSelected)
 		{
 			tab.setSelectedIndex(0);
