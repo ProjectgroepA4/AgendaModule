@@ -87,7 +87,7 @@ public class PanelTable extends JPanel implements Panel{
 		data = new Object[rows][columnes];	
 			for(int x = 0; x < rows; x++) {
 				Object[] tempData = new Object[columnes];
-				tempData[0] = "Stage 1";
+				tempData[0] = events.get(x).getStage().getName();
 				tempData[1] = events.get(x).getEventName();
 				tempData[2] = events.get(x).getArtist().getName();
 				tempData[3] = formatter.format(events.get(x).getStartDate().getTime());

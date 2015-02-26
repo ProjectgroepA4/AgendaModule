@@ -27,21 +27,21 @@ public class MenuBar extends JMenuBar {
 		newEvent.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, ActionEvent.CTRL_MASK));
 		newEvent.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//TODO
+				new AddEventPanel(w.getAgenda());
 			}
 		});
 		
 		JMenuItem newArtist = new JMenuItem("New Artist");
 		newArtist.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//TODO
+				new AddArtistPanel(w.getAgenda());
 			}
 		});
 		
 		JMenuItem newStage = new JMenuItem("New Stage");
 		newStage.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//TODO
+				new AddStagePanel(w.getAgenda());
 			}
 		});
 		
