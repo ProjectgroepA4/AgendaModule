@@ -51,8 +51,13 @@ public class Timeline extends JPanel
 
 		genStages();
 		this.setSize(frame.getWidth(), frame.getHeight());
-		refresh();
+//		refresh();
 		
+	}
+	
+	public void setEvents(ArrayList<Event> events)
+	{
+		this.events = events;
 	}
 
 	public void refresh()

@@ -27,8 +27,14 @@ public class TimelinePanel extends JPanel implements Panel {
 	@Override
 	public void update(ArrayList<Event> event) 
 	{
-		// TODO Auto-generated method stub
+		timeline.setEvents(event);
+		timeline.refresh();
 		
+	}
+	
+	public TimelinePanel getTimelinePanel()
+	{
+		return this;
 	}
 
 }
