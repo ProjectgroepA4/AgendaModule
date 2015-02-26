@@ -40,6 +40,10 @@ public class Timeline extends JPanel
 //	});
 	
 	
+	DateTime dt1 = new DateTime(2000, 1, 1, 0, 0, 0, 0);
+	DateTime dt2 = new DateTime(2010, 1, 1, 0, 0, 0, 0);
+	int days = Days.daysBetween(dt1, dt2).getDays();
+	
 	public Timeline(JPanel frame) 
 	{
 		super();
