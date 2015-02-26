@@ -3,6 +3,7 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Iterator;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -12,13 +13,13 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 
-public class AddArtistPanel extends JFrame{
+public class EditArtistPanel extends JFrame{
 
 	private static final long serialVersionUID = 1;
 
-	public AddArtistPanel(Agenda agenda)
+	public EditArtistPanel(Agenda agenda, Artist art)
 	{
-		super("Artist addscreen!");
+		super("Artist editscreen!");
 		setDefaultCloseOperation(HIDE_ON_CLOSE);
 		JPanel content = new JPanel(new BorderLayout());
 		JPanel south = new JPanel(new FlowLayout());
@@ -32,7 +33,7 @@ public class AddArtistPanel extends JFrame{
 		center.add(panel1);
 		
 		JPanel panel2 = new JPanel();
-		JTextField nameTF = new JTextField("",15);
+		JTextField nameTF = new JTextField(art.getName(),15);
 		panel2.add(nameTF);
 		center.add(panel2);
 		
@@ -41,7 +42,7 @@ public class AddArtistPanel extends JFrame{
 		panel3.add(genre);
 		center.add(panel3);
 		
-		JTextField genreTF = new JTextField("",15);
+		JTextField genreTF = new JTextField(art.getGenre(),15);
 		JPanel panel4 = new JPanel();
 		panel4.add(genreTF);
 		center.add(panel4);
@@ -62,26 +63,26 @@ public class AddArtistPanel extends JFrame{
 		center.add(panel7);
 		
 		JPanel panel8 = new JPanel();
-		JTextField descriptionTF = new JTextField("", 15);
+		JTextField descriptionTF = new JTextField(art.getDescription(), 15);
 		panel8.add(descriptionTF);
 		center.add(panel8);
-		
+
 		JPanel panel9 = new JPanel();
 		JLabel background = new JLabel("Background: ");
 		panel9.add(background);
 		center.add(panel9);
 		
 		JPanel panel10 = new JPanel();
-		JTextField backgroundTF = new JTextField("", 15);
+		JTextField backgroundTF = new JTextField(art.getBackground(), 15);
 		panel10.add(backgroundTF);
 		center.add(panel10);
 
 		
 		
-		JButton add = new JButton("Add artist!");
-		south.add(add);
+		JButton edit = new JButton("Edit artist!");
+		south.add(edit);
 		
-		add.addActionListener(new ActionListener()
+		edit.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e) {
 				String name = nameTF.getText();
@@ -103,16 +104,53 @@ public class AddArtistPanel extends JFrame{
 				}
 				else if (alreadyExists == false)
 				{
-				Artist a = new Artist(name,genre,image,description, background);
-				agenda.addArtist(a);
-				JOptionPane.showMessageDialog(null, "Artist added!");
-				setVisible(false);
-				dispose();
-				Window.updatePanel("art_sta");
+					art.setName(name);
+					art.setGenre(genre);
+					art.setImageIconString(image);
+					art.setDescription(description);
+					art.setBackground(background);
+					JOptionPane.showMessageDialog(null, "Artist edited!");
+					setVisible(false);
+					dispose();
+					Window.updatePanel("art_sta");
 				} else {
 					JOptionPane.showMessageDialog(null, "Choose a different artist name!");
 				}
 				
+			}
+		});
+		
+		JButton remove = new JButton("Remove artist!");
+		for(Event e : agenda.getEvents())
+		{
+			if(e.getArtist().equals(art))
+			{
+				remove.setEnabled(false);
+			}
+		}
+		south.add(remove);
+		
+		remove.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e) {
+				
+				if(JOptionPane.showConfirmDialog(null, "Are you sure you want to remove this artist?", "Remove Artist", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION)
+				{
+					Iterator<Artist> it = agenda.getArtists().iterator();
+					while(it.hasNext())
+					{
+						Artist a = it.next();
+						if(a.equals(art))
+						{
+							it.remove();
+						}
+					}
+					
+					JOptionPane.showMessageDialog(null, "Artist removed!");
+					setVisible(false);
+					dispose();
+					Window.updatePanel("art_sta");
+				}
 			}
 		});
 		

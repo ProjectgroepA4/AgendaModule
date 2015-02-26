@@ -25,5 +25,3 @@ public class TabbedPane extends JFrame{
 		setVisible(true);
 	}
 }
-//"Event", new EventPanel("Introductie", "Hoofdpodium", "14:00-15:00", "Populair", "Paul Lindelauf", "25-02-2015", "Het begin van het festival, wordt gepresenteerd door Paul Lindelauf. En ik moet nog een hele hoop onzin toevoegen om dit goed te kunnen testen, dus daarom doe ik dat nu ook maar even. En nog een hele hoop informatie vanwege REDENEN. En waarom de fuck hij nu wel ineens normaal kan doen weet ik niet, maar zal dus maar voor de volgende keer onthouden minder onzin te typen."
-//"Artist", new ArtistPanel("Paul Lindelauf", "Paultje Lindelauf <br> <br> Paultje is de ster van de show en opent de voorstelling. Hierna komen de geweldige artiesten.<br> <br>", "Achtergrondinformatie<br> <br> Paul staat bekend als de man die zijn leerlingen treiterde met zijn diagrammen, leiderschap en Excel.", "src/content/Paul.jpg"

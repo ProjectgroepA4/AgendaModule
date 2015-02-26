@@ -3,6 +3,7 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Iterator;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -12,13 +13,13 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 
-public class AddStagePanel extends JFrame{
+public class EditStagePanel extends JFrame{
 
 	private static final long serialVersionUID = 1;
 
-	public AddStagePanel(Agenda agenda)
+	public EditStagePanel(Agenda agenda, Stage sta)
 	{
-		super("Stage addscreen!");
+		super("Stage editscreen!");
 		setDefaultCloseOperation(HIDE_ON_CLOSE);
 		JPanel content = new JPanel(new BorderLayout());
 		JPanel south = new JPanel(new FlowLayout());
@@ -32,7 +33,7 @@ public class AddStagePanel extends JFrame{
 		center.add(panel1);
 		
 		JPanel panel2 = new JPanel();
-		JTextField nameTF = new JTextField("",15);
+		JTextField nameTF = new JTextField(sta.getName(),15);
 		panel2.add(nameTF);
 		center.add(panel2);
 		
@@ -41,13 +42,13 @@ public class AddStagePanel extends JFrame{
 		panel3.add(description);
 		center.add(panel3);
 		
-		JTextField descriptionTF = new JTextField("",15);
+		JTextField descriptionTF = new JTextField(sta.getDescription(),15);
 		JPanel panel4 = new JPanel();
 		panel4.add(descriptionTF);
 		center.add(panel4);
 		
 		
-		JButton add = new JButton("Add stage!");
+		JButton add = new JButton("Edit stage!");
 		south.add(add);
 		
 		add.addActionListener(new ActionListener()
@@ -69,9 +70,9 @@ public class AddStagePanel extends JFrame{
 				}
 				else if ( alreadyExists == false )
 				{
-					Stage s = new Stage(name,description);
-					agenda.addStage(s);
-					JOptionPane.showMessageDialog(null, "Stage added!");
+					sta.setName(name);
+					sta.setDescription(description);
+					JOptionPane.showMessageDialog(null, "Stage edited!");
 					setVisible(false);
 					dispose();
 					Window.updatePanel("art_sta");
@@ -80,6 +81,40 @@ public class AddStagePanel extends JFrame{
 					JOptionPane.showMessageDialog(null, "Choose a different stage name!");				
 				}
 				
+			}
+		});
+		
+		JButton remove = new JButton("Remove stage!");
+		for(Event e : agenda.getEvents())
+		{
+			if(e.getStage().equals(sta))
+			{
+				remove.setEnabled(false);
+			}
+		}
+		south.add(remove);
+		
+		remove.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e) {
+				
+				if(JOptionPane.showConfirmDialog(null, "Are you sure you want to remove this stage?", "Remove Stage", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION)
+				{
+					Iterator<Stage> it = agenda.getStages().iterator();
+					while(it.hasNext())
+					{
+						Stage s = it.next();
+						if(s.equals(sta))
+						{
+							it.remove();
+						}
+					}
+					
+					JOptionPane.showMessageDialog(null, "Stage removed!");
+					setVisible(false);
+					dispose();
+					Window.updatePanel("art_sta");
+				}
 			}
 		});
 		

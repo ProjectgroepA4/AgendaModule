@@ -34,7 +34,7 @@ public class PanelArtSta extends JPanel implements Panel{
 
 			        if (artists.getSelectedIndex() == -1) {
 			        } else {
-			            JOptionPane.showMessageDialog(null, "Artist Selected: " + a.getArtists().get(artists.getSelectedIndex()));
+			            new EditArtistPanel(w.getAgenda(), a.getArtists().get(artists.getSelectedIndex()));
 			            artists.clearSelection();
 			        }
 			    }
@@ -54,7 +54,7 @@ public class PanelArtSta extends JPanel implements Panel{
 
 			        if (stages.getSelectedIndex() == -1) {
 			        } else {
-			            JOptionPane.showMessageDialog(null, "Stage Selected: " + a.getStages().get(stages.getSelectedIndex()));
+			        	new EditStagePanel(w.getAgenda(), a.getStages().get(stages.getSelectedIndex()));
 			            stages.clearSelection();
 			        }
 			    }
