@@ -40,9 +40,9 @@ public class Timeline extends JPanel
 //	});
 	
 	
-	DateTime dt1 = new DateTime(2000, 1, 1, 0, 0, 0, 0);
-	DateTime dt2 = new DateTime(2010, 1, 1, 0, 0, 0, 0);
-	int days = Days.daysBetween(dt1, dt2).getDays();
+//	DateTime dt1 = new DateTime(2000, 1, 1, 0, 0, 0, 0);
+//	DateTime dt2 = new DateTime(2010, 1, 1, 0, 0, 0, 0);
+//	int days = Days.daysBetween(dt1, dt2).getDays();
 	
 	public Timeline(JPanel frame) 
 	{
@@ -223,8 +223,8 @@ public class Timeline extends JPanel
 
 	public int calcEndTimeOfStagePanel(int posx, int imageWidth)
 	{
-		GregorianCalendar min = findMinMax(1);
-		GregorianCalendar max = findMinMax(2);
+		int min = findMinMax(1);
+		int max = findMinMax(2);
 		//Omdat het anders onnodig afgerond wordt, alles apart in doubles.
 		double minmax = max-min;
 		double bottom = this.getWidth() / minmax;
@@ -243,8 +243,8 @@ public class Timeline extends JPanel
 		//		Steage oldstage = new Stage(oldevents,0,null, 0, 0);
 		ArrayList<Event> eventscopy = (ArrayList<Event>) events.clone();
 
-		GregorianCalendar earliestStartTime = null;
-		GregorianCalendar lastEndTime = null;
+		Integer earliestStartTime = null;
+		Integer lastEndTime = null;
 
 		for(Event event : eventscopy)
 		{
@@ -253,14 +253,14 @@ public class Timeline extends JPanel
 				if(earliestStartTime == null)
 				{
 
-					earliestStartTime = event.getStartDate();
+					earliestStartTime = event.getStartTime();
 				}
 
 				else
 				{
-					if(event.getStartDate() < earliestStartTime)
+					if(event.getStartTime() < earliestStartTime)
 					{
-						earliestStartTime = event.getStartDate();
+						earliestStartTime = event.getStartTime();
 					}
 				}
 			}
@@ -268,13 +268,13 @@ public class Timeline extends JPanel
 			{
 				if(lastEndTime == null)
 				{
-					lastEndTime = event.getEndDate();
+					lastEndTime = event.getEndTime();
 				}
 				else
 				{
-					if(event.getEndDate() > lastEndTime)
+					if(event.getEndTime() > lastEndTime)
 					{
-						lastEndTime = event.getEndDate();
+						lastEndTime = event.getEndTime();
 					}
 				}
 			}
