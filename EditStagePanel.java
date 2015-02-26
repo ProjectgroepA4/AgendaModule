@@ -60,7 +60,7 @@ public class EditStagePanel extends JFrame{
 				boolean alreadyExists = false;
 				for (Stage stage : agenda.getStages())
 				{
-					if (stage.getName().equals(name))
+					if (stage.getName().equals(name)  && !stage.equals(sta))
 					{
 						alreadyExists = true;
 					}

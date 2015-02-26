@@ -94,7 +94,7 @@ public class EditArtistPanel extends JFrame{
 				boolean alreadyExists = false;
 				for (Artist artist : agenda.getArtists())
 				{
-					if (artist.getName().equals(name))
+					if (artist.getName().equals(name) && !artist.equals(art))
 					{
 						alreadyExists = true;
 					}
