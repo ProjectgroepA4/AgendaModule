@@ -35,7 +35,10 @@ public class Main {
 		
 		agn.fillArtists();
 		agn.fillStages();
+
 		w.updatePanel();
+
+
 	}
 
 }

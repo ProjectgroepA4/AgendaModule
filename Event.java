@@ -1,6 +1,8 @@
 import java.io.Serializable;
 import java.text.DateFormat;
+import java.text.Format;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 public class Event implements Serializable {
@@ -110,6 +112,70 @@ public class Event implements Serializable {
 
 	public void setStage(Stage stage) {
 		this.stage = stage;
+	}
+	
+	public int getLength()
+	{
+		return getEndTime() - getStartTime();
+	}
+	
+	public int getStartTime()
+	{
+		DateFormat format = new SimpleDateFormat("kkmm");
+		format.setLenient(false);
+//		System.out.println(format.format(startDate.getTime()));
+		
+//		System.out.println(date.get(Calendar.HOUR_OF_DAY));
+		int time = Integer.valueOf(format.format(startDate.getTime()));
+		int hours = time/100;
+		int minutes = time%100;
+		int finaltime;
+		if(minutes != 0)
+		{
+			finaltime = hours*60 + minutes;
+		}
+		else
+		{
+			finaltime = hours*60;
+		}
+		return finaltime;
+	}
+	
+	public int getEndTime()
+	{
+		DateFormat format = new SimpleDateFormat("kkmm");
+		format.setLenient(false);
+//		System.out.println(format.format(endDate.getTime()));
+		int time = Integer.valueOf(format.format(endDate.getTime()));
+		int hours = time/100;
+		int minutes = time%100;
+		int finaltime;
+		if(minutes != 0)
+		{
+			finaltime = hours*60 + minutes;
+		}
+		else
+		{
+			finaltime = hours*60;
+		}
+		
+		return finaltime;
+	}
+	
+	public void setStartTime(int hours, int minutes)
+	{
+//		System.out.println("Start:" + hours + ":" + minutes);
+		startDate.set(Calendar.HOUR_OF_DAY, hours);
+		startDate.set(Calendar.MINUTE, minutes);
+//		System.out.println(startDate.getTime());
+	}
+	
+	public void setEndTime(int hours, int minutes)
+	{
+//		System.out.println("End:" + hours + ":" + minutes);
+		endDate.set(Calendar.HOUR_OF_DAY, hours);
+		endDate.set(Calendar.MINUTE, minutes);
+//		System.out.println(endDate.getTime());
 	}
 
 	public String toString() {

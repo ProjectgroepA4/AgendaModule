@@ -7,6 +7,8 @@ import java.awt.FlowLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.text.SimpleDateFormat;
@@ -74,6 +76,9 @@ public class Window extends JFrame {
 		
 		Panel art_staPanel = new PanelArtSta(this);
 		panels.put("art_sta", art_staPanel);
+		
+		Panel timeline = new TimelinePanel();
+		panels.put("timeline", timeline);
 		
 		//Main Panels
 		JPanel mainPanel = new JPanel(new BorderLayout());
@@ -163,6 +168,18 @@ public class Window extends JFrame {
 		
 		//Show window
 		setVisible(true);
+		this.getRootPane().addComponentListener(new ComponentAdapter() 
+		{
+			public void componentResized(ComponentEvent e) {
+                if(currentPanel == "timeline")
+                {
+                	TimelinePanel tempTimeLine = (TimelinePanel) timeline;
+                    tempTimeLine.refresh();
+                }
+				
+
+            }
+		});
 	}
 	
 	public static void changePanel(String panel)
