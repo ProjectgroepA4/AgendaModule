@@ -17,11 +17,13 @@ public class PanelArtSta extends JPanel implements Panel{
 	JList stages;
 	Object[] dataArtist;
 	Object[] dataStage;
+	Window w;
 	
 	public PanelArtSta(Window w)
 	{
 		super();
 		a = w.getAgenda();
+		this.w = w;
 		
 		artists = new JList();
 		artists.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
@@ -70,24 +72,47 @@ public class PanelArtSta extends JPanel implements Panel{
 	
 	public void compileData()
 	{
-		int artists = a.getArtists().size();
-		int stages = a.getStages().size();
-		dataArtist = new Object[artists];
-		dataStage = new Object[stages];
+		int artistsList = a.getArtists().size();
+		int stagesList = a.getStages().size();
 		
-		for(int i = 0; i < artists; i++)
+		if(artistsList > 0)
 		{
-			dataArtist[i] = a.getArtists().get(i);
+			dataArtist = new Object[artistsList];
+			for(int i = 0; i < artistsList; i++)
+			{
+				dataArtist[i] = a.getArtists().get(i);
+			}
+			artists.setEnabled(true);
 		}
-		for(int i = 0; i < stages; i++)
+		else
 		{
-			dataStage[i] = a.getStages().get(i);
+			dataArtist = new Object[1];
+			dataArtist[0] = new Artist("Geen Artists", "Geen Artists", "null", "Geen Artists", "Geen Artists");
+			artists.setEnabled(false);
+		}
+		
+		if(stagesList > 0)
+		{
+			dataStage = new Object[stagesList];
+			
+			for(int i = 0; i < stagesList; i++)
+			{
+				dataStage[i] = a.getStages().get(i);
+			}
+			stages.setEnabled(true);
+		}
+		else
+		{
+			dataStage = new Object[1];
+			dataStage[0] = new Stage("Geen Stages", "Geen Stages");
+			stages.setEnabled(false);
 		}
 	}
 	
 	@Override
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void update(ArrayList<Event> event) {
+		a = w.getAgenda();
 		compileData();
 		AbstractListModel artistsList = new ContentList(dataArtist);
 		AbstractListModel stagesList = new ContentList(dataStage);
