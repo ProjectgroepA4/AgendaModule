@@ -64,7 +64,7 @@ public class PanelTable extends JPanel implements Panel{
 			public void actionPerformed(ActionEvent e) { filter(); }
 		});
 		buttonPanel.add(button);
-		button = new JButton(new ImageIcon("sprites/sprite0.png"));
+		button = new JButton(new ImageIcon("src/sprites/sprite0.png"));
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) { update(fullEvents, true); }
 		});
