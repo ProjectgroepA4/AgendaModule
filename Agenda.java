@@ -211,6 +211,8 @@ public class Agenda implements Serializable {
 	public void clearAgenda()
 	{
 		events.clear();
+		stages.clear();
+		artists.clear();
 	}	
 	
 	public void fillAllLists()

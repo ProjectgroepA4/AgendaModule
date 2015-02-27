@@ -270,7 +270,7 @@ public class EditEventPanel extends JFrame{
 					JOptionPane.showMessageDialog(null, "Event edited!");
 					setVisible(false);
 					dispose();
-					Window.updatePanel("table");
+					Window.updatePanel();
 					if(tab != null)
 					{
 					tab.setVisible(false);
@@ -296,7 +296,7 @@ public class EditEventPanel extends JFrame{
 		
 		remove.addActionListener(new ActionListener()
 		{
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent f) {
 				
 				if(JOptionPane.showConfirmDialog(null, "Are you sure you want to remove this event?", "Remove Event", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION)
 				{
@@ -313,11 +313,11 @@ public class EditEventPanel extends JFrame{
 					JOptionPane.showMessageDialog(null, "Event removed!");
 					setVisible(false);
 					dispose();
-					Window.updatePanel("table");
+					Window.updatePanel();
 					if(tab != null)
 					{
-					tab.setVisible(false);
-					tab.dispose();
+						tab.setVisible(false);
+						tab.dispose();
 					}
 				}
 			}
