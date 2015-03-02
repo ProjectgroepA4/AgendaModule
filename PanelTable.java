@@ -24,7 +24,7 @@ import javax.swing.table.AbstractTableModel;
 /**
  * Constructs a JTable in a ScrolPane.
  * @author Wesley
- * @version 1.2
+ * @version 1.3
  */
 public class PanelTable extends JPanel implements Panel{
 
@@ -52,6 +52,7 @@ public class PanelTable extends JPanel implements Panel{
 		table= new JTable();
 		table.setAutoCreateRowSorter(true);
 		table.setAutoResizeMode(table.AUTO_RESIZE_ALL_COLUMNS);
+		table.getTableHeader().setReorderingAllowed(false);
 		table.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) { if(e.getClickCount() > 1 ) cellClicked(e); else selectedCell = (JTable) e.getSource(); }
 		});
@@ -173,7 +174,7 @@ public class PanelTable extends JPanel implements Panel{
 				break;
 			case 1: 
 				for(Event event : fullEvents) {
-					if(event.equals(events.get(selectedCell.getSelectedRow()))) {
+					if(event.getEventName().equals(events.get(selectedCell.getSelectedRow()).getEventName())) {
 						filteredList.add(event);
 					}
 				}
@@ -185,7 +186,32 @@ public class PanelTable extends JPanel implements Panel{
 					}
 				}
 				break;
-				
+			case 3:
+				int selectedCellStartTime = events.get(selectedCell.getSelectedRow()).getStartDate().getTime().getHours()*100;
+				selectedCellStartTime += events.get(selectedCell.getSelectedRow()).getStartDate().getTime().getMinutes();
+				int selectedCellEndTime = events.get(selectedCell.getSelectedRow()).getEndDate().getTime().getHours()*100;
+				selectedCellEndTime += events.get(selectedCell.getSelectedRow()).getEndDate().getTime().getMinutes();
+				for(Event event : fullEvents) {
+					int time = event.getStartDate().getTime().getHours()*100;
+					time += event.getStartDate().getTime().getMinutes();
+					if(time >= selectedCellStartTime && time <= selectedCellEndTime) {
+						filteredList.add(event);
+					}
+				}
+				break;
+			case 4:
+				selectedCellStartTime = events.get(selectedCell.getSelectedRow()).getStartDate().getTime().getHours()*100;
+				selectedCellStartTime += events.get(selectedCell.getSelectedRow()).getStartDate().getTime().getMinutes();
+				selectedCellEndTime = events.get(selectedCell.getSelectedRow()).getEndDate().getTime().getHours()*100;
+				selectedCellEndTime += events.get(selectedCell.getSelectedRow()).getEndDate().getTime().getMinutes();
+				for(Event event : fullEvents) {
+					int time = event.getEndDate().getTime().getHours()*100;
+					time += event.getEndDate().getTime().getMinutes();
+					if(time >= selectedCellStartTime && time <= selectedCellEndTime) {
+						filteredList.add(event);
+					}
+				}
+				break;
 			}
 			update(filteredList,false);	
 			selectedCell = null;
